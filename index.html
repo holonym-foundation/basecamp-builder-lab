@@ -226,6 +226,9 @@ footer a, .panel a { color: var(--accent); }
   const $ = (id) => document.getElementById(id);
   const term = $("term");
   const EXP = "https://suiscan.xyz/mainnet";
+  const TXNET = new URLSearchParams(location.search).get("net") === "testnet" ? "testnet" : "mainnet";
+  const TX_GQL = TXNET === "testnet" ? "https://graphql.testnet.sui.io/graphql" : GQL;
+  const TX_EXP = "https://suiscan.xyz/" + TXNET;
   let timer = null, samples = 0, sim = null, meta = null, lastTick = null, busy = false, realPos = null;
   const coinCache = {};
 
@@ -249,8 +252,8 @@ footer a, .panel a { color: var(--accent); }
     term.scrollTop = term.scrollHeight;
   }
 
-  async function gql(query) {
-    const res = await fetch(GQL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) });
+  async function gql(query, endpoint) {
+    const res = await fetch(endpoint || GQL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) });
     if (!res.ok) throw new Error("HTTP " + res.status);
     const j = await res.json();
     if (j.errors) throw new Error(j.errors[0].message);
@@ -477,7 +480,7 @@ footer a, .panel a { color: var(--accent); }
   async function coin(type) {
     if (coinCache[type]) return coinCache[type];
     try {
-      const d = await gql(`{ coinMetadata(coinType: "${type}") { decimals symbol } }`);
+      const d = await gql(`{ coinMetadata(coinType: "${type}") { decimals symbol } }`, TX_GQL);
       coinCache[type] = d.coinMetadata || { decimals: 0, symbol: type.split("::").pop() };
     } catch { coinCache[type] = { decimals: 0, symbol: type.split("::").pop() }; }
     return coinCache[type];
@@ -489,26 +492,27 @@ footer a, .panel a { color: var(--accent); }
     out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "Reading from Sui…" }));
     try {
       if (!meta) meta = await loadMeta();
-      const d = await gql(`{ transaction(digest: "${digest}") { digest sender { address } effects { status timestamp checkpoint { sequenceNumber } gasEffects { gasSummary { computationCost storageCost storageRebate } } balanceChanges(first: 20) { nodes { owner { address } amount coinType { repr } } } events(first: 50) { nodes { contents { type { repr } json } } } } } }`);
+      const d = await gql(`{ transaction(digest: "${digest}") { digest sender { address } effects { status timestamp checkpoint { sequenceNumber } gasEffects { gasSummary { computationCost storageCost storageRebate } } balanceChanges(first: 20) { nodes { owner { address } amount coinType { repr } } } events(first: 50) { nodes { contents { type { repr } json } } } } } }`, TX_GQL);
       out.textContent = "";
       const tx = d.transaction;
-      if (!tx) { out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "Not found on Sui mainnet. Check the digest, or wait a few seconds if it was just sent." })); return; }
+      if (!tx) { out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: `Not found on Sui ${TXNET}. Check the digest and network, or wait a few seconds if it was just sent.` })); return; }
       const e = tx.effects, g = e.gasEffects.gasSummary;
             const dl = document.createElement("dl"); dl.className = "kv";
       const row = (k, v) => { const dt = document.createElement("dt"); dt.textContent = k; const dd = document.createElement("dd"); dd.append(...[].concat(v)); dl.append(dt, dd); };
       row("Status", Object.assign(document.createElement("span"), { className: "pill " + (e.status === "SUCCESS" ? "ok" : "bad"), textContent: e.status === "SUCCESS" ? "Success" : "Failed" }));
       row("Time", new Date(e.timestamp).toLocaleString("en-GB"));
-      row("Checkpoint", link(EXP + "/checkpoint/" + e.checkpoint.sequenceNumber, fmt(Number(e.checkpoint.sequenceNumber))));
-      row("Sender", link(EXP + "/account/" + tx.sender.address, short(tx.sender.address)));
+      row("Network", "Sui " + TXNET);
+      row("Checkpoint", link(TX_EXP + "/checkpoint/" + e.checkpoint.sequenceNumber, fmt(Number(e.checkpoint.sequenceNumber))));
+      row("Sender", link(TX_EXP + "/account/" + tx.sender.address, short(tx.sender.address)));
       const comp = Number(g.computationCost) / 1e9, stor = (Number(g.storageCost) - Number(g.storageRebate)) / 1e9;
       row("Gas", `${comp.toFixed(6)} SUI compute · storage ${stor >= 0 ? stor.toFixed(6) + " SUI" : "refund " + (-stor).toFixed(6) + " SUI"}`);
       for (const b of e.balanceChanges.nodes.slice(0, 8)) {
         const m = await coin(b.coinType.repr), v = Number(b.amount) / 10 ** m.decimals;
-        row("Balance change", [b.owner ? link(EXP + "/account/" + b.owner.address, short(b.owner.address)) : "object", ` ${v > 0 ? "+" : ""}${v.toLocaleString("en-US", { maximumFractionDigits: 6 })} ${m.symbol}`]);
+        row("Balance change", [b.owner ? link(TX_EXP + "/account/" + b.owner.address, short(b.owner.address)) : "object", ` ${v > 0 ? "+" : ""}${v.toLocaleString("en-US", { maximumFractionDigits: 6 })} ${m.symbol}`]);
       }
       const evs = poolEvents(tx);
       if (evs.length) { const [t, dsc] = describe(evs); row("On this pool", `${t}${dsc ? " · " + dsc : ""}`); }
-      row("Explorer", link(EXP + "/tx/" + tx.digest, "Open on Suiscan ↗"));
+      row("Explorer", link(TX_EXP + "/tx/" + tx.digest, "Open on Suiscan ↗"));
       out.appendChild(dl);
     } catch (err) {
       out.textContent = "";
