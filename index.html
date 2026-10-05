@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Guard Pool Watcher</title>
+<meta name="description" content="A read-only Sui agent that watches a Cetus pool and simulates a liquidity range. No wallet, no transactions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: instrument panel. Readout + range gauge on top, controls beside, terminal log below. */
+:root {
+  --bg: #f4f6f8;
+  --panel: #ffffff;
+  --ink: #0f1720;
+  --muted: #5b6876;
+  --line: #d9e0e7;
+  --accent: #2563eb;      /* Sui-adjacent blue, used sparingly */
+  --band: #dbe7ff;
+  --ok: #0f7a4f;
+  --warn: #b45309;
+  --term-bg: #0d1218;
+  --term-ink: #d6e2ee;
+  --term-dim: #7f91a3;
+  --font-ui: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0e13; --panel: #121820; --ink: #e8eef4; --muted: #93a3b3; --line: #243040;
+    --accent: #6ea0ff; --band: #1b2a44; --ok: #34d399; --warn: #fbbf24;
+    --term-bg: #05080b; --term-ink: #d6e2ee; --term-dim: #6f8193; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0e13; --panel: #121820; --ink: #e8eef4; --muted: #93a3b3; --line: #243040;
+  --accent: #6ea0ff; --band: #1b2a44; --ok: #34d399; --warn: #fbbf24;
+  --term-bg: #05080b; --term-ink: #d6e2ee; --term-dim: #6f8193; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--font-ui);
+  font-size: 15px; line-height: 1.5; padding-inline: 16px;
+  padding-block: calc(20px + env(safe-area-inset-top, 0px)) calc(28px + env(safe-area-inset-bottom, 0px));
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+h1 small { display: block; font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 600 11px/1 var(--font-ui); text-transform: uppercase; letter-spacing: .08em; padding: 7px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--panel); }
+.chip.live { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--line)); }
+.grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; align-items: start; }
+@media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+.label { font: 600 11px/1.2 var(--font-ui); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.readout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 460px) { .readout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.metric .v { font: 600 clamp(22px, 3.2vw, 30px)/1.1 var(--font-ui); font-variant-numeric: tabular-nums; margin-top: 6px; overflow-wrap: anywhere; }
+.metric .s { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.gauge { margin-top: 20px; }
+.track { position: relative; height: 54px; margin-top: 10px; border-radius: 10px; background: color-mix(in srgb, var(--line) 45%, transparent); overflow: hidden; }
+.bandfill { position: absolute; top: 0; bottom: 0; background: var(--band); border-left: 2px solid var(--accent); border-right: 2px solid var(--accent); transition: left .4s, width .4s; }
+.center { position: absolute; top: 8px; bottom: 8px; width: 0; border-left: 1px dashed var(--muted); transition: left .4s; }
+.marker { position: absolute; top: 4px; bottom: 4px; width: 4px; margin-left: -2px; border-radius: 2px; background: var(--ink); transition: left .4s; }
+.ticks { display: flex; justify-content: space-between; font: 500 12px/1.3 var(--font-mono); color: var(--muted); margin-top: 6px; font-variant-numeric: tabular-nums; gap: 8px; }
+.status { margin-top: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex: none; }
+.status.ok .dot { background: var(--ok); } .status.ok { color: var(--ok); }
+.status.warn .dot { background: var(--warn); } .status.warn { color: var(--warn); }
+form { display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field input, .field select { font: 500 16px var(--font-mono); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; min-width: 0; }
+.field input:focus-visible, .field select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hint { color: var(--muted); font-size: 13px; }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: 600 15px var(--font-ui); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button:disabled { opacity: .5; cursor: default; }
+.term { background: var(--term-bg); color: var(--term-ink); border-radius: 14px; padding: 14px 16px; font: 13px/1.6 var(--font-mono); min-height: 180px; max-height: 340px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.term .dim { color: var(--term-dim); }
+.term .hot { color: #fbbf24; }
+.termhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+ol.steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+ol.steps code, p code { font: 500 13px var(--font-mono); background: color-mix(in srgb, var(--line) 50%, transparent); padding: 1px 5px; border-radius: 5px; }
+footer { color: var(--muted); font-size: 13px; display: grid; gap: 4px; }
+footer a, .panel a { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .bandfill, .center, .marker { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Guard
+      <small>A read-only Sui agent that watches a Cetus pool and simulates a liquidity range.</small>
+    </h1>
+    <div class="chips" aria-label="Safety">
+      <span class="chip live" id="netChip">Sui mainnet</span>
+      <span class="chip">Read-only</span>
+      <span class="chip">No wallet</span>
+      <span class="chip">No transactions</span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="panel" aria-live="polite">
+      <div class="label" id="pairLabel">Cetus pool · USDC / SUI</div>
+      <div class="readout" style="margin-top:12px">
+        <div class="metric"><div class="label">SUI price</div><div class="v" id="price">—</div><div class="s" id="priceSub">USDC per SUI</div></div>
+        <div class="metric"><div class="label">Pool tick</div><div class="v" id="tick">—</div><div class="s" id="tickSub">tick spacing —</div></div>
+        <div class="metric"><div class="label">Samples</div><div class="v" id="samples">0</div><div class="s" id="lastRead">not started</div></div>
+      </div>
+      <div class="gauge">
+        <div class="label">Simulated position · no liquidity deposited</div>
+        <div class="track" id="track" role="img" aria-label="Simulated range and current tick">
+          <div class="bandfill" id="band" style="left:25%;width:50%"></div>
+          <div class="center" id="centerLine" style="left:50%"></div>
+          <div class="marker" id="marker" style="left:50%"></div>
+        </div>
+        <div class="ticks"><span id="lowerT">lower —</span><span id="centerT">center —</span><span id="upperT">upper —</span></div>
+      </div>
+      <div class="status" id="status"><span class="dot"></span><span id="statusText">Press Start to read the pool.</span></div>
+    </section>
+
+    <section class="panel">
+      <form id="cfg" autocomplete="off">
+        <div class="field">
+          <label class="label" for="range">Range (± ticks)</label>
+          <input id="range" type="number" inputmode="numeric" min="20" max="5000" step="20" value="200">
+          <span class="hint">Workshop edit: change 200 to 400, then Reset and Start.</span>
+        </div>
+        <div class="field">
+          <label class="label" for="threshold">Rebalance threshold (ticks)</label>
+          <input id="threshold" type="number" inputmode="numeric" min="1" max="5000" step="1" value="100">
+          <span class="hint">Drift from the center past this would trigger a rebalance.</span>
+        </div>
+        <div class="field">
+          <label class="label" for="interval">Check every</label>
+          <select id="interval">
+            <option value="5000" selected>5 seconds</option>
+            <option value="10000">10 seconds</option>
+            <option value="30000">30 seconds</option>
+          </select>
+        </div>
+        <div class="buttons">
+          <button type="button" class="primary" id="startBtn">Start</button>
+          <button type="button" id="stopBtn" disabled>Stop</button>
+          <button type="button" id="resetBtn">Reset</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="termhead">
+      <div class="label">Agent output · same lines as the terminal version</div>
+      <button type="button" id="copyBtn">Copy log</button>
+    </div>
+    <div class="term" id="term" tabindex="0" aria-label="Agent log"><span class="dim">Waiting to start. This page reads Sui mainnet through the public GraphQL endpoint and never connects a wallet.</span></div>
+  </section>
+
+  <section class="panel">
+    <div class="label">Exercise</div>
+    <ol class="steps">
+      <li>Press <b>Start</b>. Watch three samples arrive and note the simulated range.</li>
+      <li>Change <b>Range</b> from <code>200</code> to <code>400</code>. Press <b>Reset</b>, then <b>Start</b>.</li>
+      <li>Compare the new <code>SIMULATED RANGE</code> line with the first one. It is roughly twice as wide.</li>
+      <li>Bonus: set the threshold to <code>5</code> and watch for a <code>would rebalance</code> line when the pool moves.</li>
+    </ol>
+    <p class="hint" style="margin:12px 0 0">The range snaps to the pool's tick spacing, so ±200 ticks becomes a 360-tick band on a 60-spacing pool. Prices move in ticks: one tick is a 0.01% price step.</p>
+  </section>
+
+  <footer>
+    <span>Data: Sui mainnet via <code>graphql.mainnet.sui.io</code>. The page reads one public pool object. It signs nothing and holds no keys.</span>
+    <span>Same strategy as the WaaP <a href="https://docs.waap.human.tech/recipes" target="_blank" rel="noopener">Cetus Yield Agent recipe</a> in monitor mode. <a id="poolLink" href="https://suiscan.xyz/mainnet/object/0xb8d7d9e66a60c239e7a60110efcf8de6c705580ed924d0dde141f4a0e2c90105" target="_blank" rel="noopener">View the pool on Suiscan</a>.</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const GQL = "https://graphql.mainnet.sui.io/graphql";
+  const POOL = "0xb8d7d9e66a60c239e7a60110efcf8de6c705580ed924d0dde141f4a0e2c90105";
+  const $ = (id) => document.getElementById(id);
+  const term = $("term");
+  let timer = null, samples = 0, sim = null, meta = null, lastTick = null, busy = false;
+
+  const toI32 = (bits) => { const n = Number(bits); return n >= 2 ** 31 ? n - 2 ** 32 : n; };
+  const align = (t, s) => Math.round(t / s) * s;   // matches the recipe's monitor mode
+  const fmt = (n) => n.toLocaleString("en-US");
+
+  function line(text, cls) {
+    if (term.dataset.started !== "1") { term.textContent = ""; term.dataset.started = "1"; }
+    const el = document.createElement("div");
+    if (cls) el.className = cls;
+    el.textContent = text;
+    term.appendChild(el);
+    term.scrollTop = term.scrollHeight;
+  }
+
+  async function gql(query) {
+    const res = await fetch(GQL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ query }) });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const j = await res.json();
+    if (j.errors) throw new Error(j.errors[0].message);
+    return j.data;
+  }
+
+  async function loadMeta() {
+    const d = await gql(`{ object(address: "${POOL}") { asMoveObject { contents { type { repr } } } } }`);
+    const repr = d.object.asMoveObject.contents.type.repr;
+    const m = repr.match(/<(.+),\s*(.+)>$/);
+    const [a, b] = [m[1].trim(), m[2].trim()];
+    const md = await gql(`{ a: coinMetadata(coinType: "${a}") { decimals symbol } b: coinMetadata(coinType: "${b}") { decimals symbol } }`);
+    return { a: md.a, b: md.b };
+  }
+
+  async function readPool() {
+    const d = await gql(`{ object(address: "${POOL}") { asMoveObject { contents { json } } } checkpoint { sequenceNumber timestamp } }`);
+    const f = d.object.asMoveObject.contents.json;
+    return {
+      tick: toI32(f.current_tick_index.bits),
+      spacing: Number(f.tick_spacing),
+      sqrt: BigInt(f.current_sqrt_price),
+      checkpoint: d.checkpoint.sequenceNumber,
+      at: d.checkpoint.timestamp,
+    };
+  }
+
+  function priceBPerA(sqrt) {
+    // Cetus stores sqrt(price) as Q64.64; price = (sqrt / 2^64)^2 * 10^(decA - decB)
+    const s = Number(sqrt) / 2 ** 64;
+    return s * s * 10 ** (meta.a.decimals - meta.b.decimals);
+  }
+
+  function render(p, cfg) {
+    const pb = priceBPerA(p.sqrt);                     // B per A
+    const suiIsB = meta.b.symbol === "SUI";
+    const suiPrice = suiIsB ? 1 / pb : pb;             // quote SUI in the other coin
+    $("price").textContent = suiPrice.toFixed(4);
+    $("priceSub").textContent = `${suiIsB ? meta.a.symbol : meta.b.symbol} per SUI`;
+    $("tick").textContent = fmt(p.tick);
+    $("tickSub").textContent = `tick spacing ${p.spacing}`;
+    $("samples").textContent = samples;
+    $("lastRead").textContent = `checkpoint ${fmt(Number(p.checkpoint))}`;
+    if (!sim) return;
+    const pad = Math.max(cfg.range * 0.6, 60);
+    const lo = sim.lower - pad, hi = sim.upper + pad, span = hi - lo;
+    const pct = (t) => Math.min(100, Math.max(0, ((t - lo) / span) * 100));
+    $("band").style.left = pct(sim.lower) + "%";
+    $("band").style.width = (pct(sim.upper) - pct(sim.lower)) + "%";
+    $("centerLine").style.left = pct(sim.center) + "%";
+    $("marker").style.left = pct(p.tick) + "%";
+    $("lowerT").textContent = "lower " + fmt(sim.lower);
+    $("centerT").textContent = "center " + fmt(sim.center);
+    $("upperT").textContent = "upper " + fmt(sim.upper);
+  }
+
+  function setStatus(kind, text) {
+    $("status").className = "status " + (kind || "");
+    $("statusText").textContent = text;
+  }
+
+  function cfg() {
+    return {
+      range: Math.max(1, Number($("range").value) || 200),
+      threshold: Math.max(1, Number($("threshold").value) || 100),
+      interval: Number($("interval").value) || 5000,
+    };
+  }
+
+  async function cycle() {
+    if (busy) return;
+    busy = true;
+    const c = cfg();
+    try {
+      if (!meta) meta = await loadMeta();
+      const p = await readPool();
+      samples++;
+      line(`Pool tick: ${p.tick} | samples: ${samples}`);
+      if (!sim) {
+        sim = { lower: align(p.tick - c.range, p.spacing), upper: align(p.tick + c.range, p.spacing), center: p.tick };
+        line(`SIMULATED RANGE: ${sim.lower} → ${sim.upper}; no liquidity deposited`);
+        setStatus("ok", `In range · drift 0 · threshold ${c.threshold}`);
+      } else {
+        const drift = Math.abs(p.tick - sim.center);
+        const out = p.tick < sim.lower || p.tick > sim.upper;
+        if (out || drift > c.threshold) {
+          line(`would rebalance | drift ${drift} | threshold ${c.threshold}${out ? " | out of range" : ""}`, "hot");
+          sim = { lower: align(p.tick - c.range, p.spacing), upper: align(p.tick + c.range, p.spacing), center: p.tick };
+          line(`SIMULATED RANGE: ${sim.lower} → ${sim.upper}; no liquidity deposited`);
+          setStatus("warn", `Would rebalance · drift ${drift} > ${c.threshold}. Simulated range re-centered.`);
+        } else {
+          line(`In range | drift ${drift} | threshold ${c.threshold}`);
+          setStatus("ok", `In range · drift ${drift} · threshold ${c.threshold}`);
+        }
+      }
+      lastTick = p.tick;
+      render(p, c);
+      $("netChip").textContent = "Sui mainnet · live";
+    } catch (e) {
+      line(`ERROR: could not read Sui (${e.message}). Retrying at the next check.`, "hot");
+      setStatus("warn", "Can't reach Sui right now. Check the wifi; the page retries automatically.");
+      $("netChip").textContent = "Sui mainnet · offline";
+    } finally {
+      busy = false;
+    }
+  }
+
+  function start() {
+    if (timer) return;
+    const c = cfg();
+    line(`LIVE POOL READS | mainnet | monitor | range ±${c.range} ticks`, "dim");
+    $("startBtn").disabled = true; $("stopBtn").disabled = false;
+    ["range", "threshold", "interval"].forEach((id) => ($(id).disabled = true));
+    cycle();
+    timer = setInterval(cycle, c.interval);
+  }
+  function stop() {
+    clearInterval(timer); timer = null;
+    $("startBtn").disabled = false; $("stopBtn").disabled = true;
+    ["range", "threshold", "interval"].forEach((id) => ($(id).disabled = false));
+    line("stopped", "dim");
+  }
+  function reset() {
+    if (timer) stop();
+    sim = null; samples = 0;
+    $("samples").textContent = "0";
+    setStatus("", "Reset. Press Start to open a new simulated position.");
+    line("---- reset ----", "dim");
+  }
+
+  // Optional presets for QR links: ?range=400&threshold=5&autostart=1
+  const q = new URLSearchParams(location.search);
+  if (q.get("range")) $("range").value = q.get("range");
+  if (q.get("threshold")) $("threshold").value = q.get("threshold");
+  if (q.get("autostart") === "1") setTimeout(start, 0);
+
+  $("startBtn").addEventListener("click", start);
+  $("stopBtn").addEventListener("click", stop);
+  $("resetBtn").addEventListener("click", reset);
+  $("copyBtn").addEventListener("click", async () => {
+    const text = term.innerText;
+    try { await navigator.clipboard.writeText(text); $("copyBtn").textContent = "Copied"; }
+    catch { const r = document.createRange(); r.selectNodeContents(term); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("copyBtn").textContent = "Selected"; }
+    setTimeout(() => ($("copyBtn").textContent = "Copy log"), 1500);
+  });
+})();
+</script>
+</body>
+</html>
