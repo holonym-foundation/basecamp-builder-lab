@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hunt Research Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one card column. Prompt block with copy, then steps, then a checked example answer. */
+:root {
+  --bg: #f4f6f8; --panel: #ffffff; --ink: #0f1720; --muted: #5b6876; --line: #d9e0e7;
+  --accent: #2563eb; --ok: #0f7a4f; --code-bg: #0d1218; --code-ink: #d6e2ee;
+  --font-ui: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0a0e13; --panel: #121820; --ink: #e8eef4; --muted: #93a3b3; --line: #243040; --accent: #6ea0ff; --ok: #34d399; --code-bg: #05080b; --code-ink: #d6e2ee; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #0a0e13; --panel: #121820; --ink: #e8eef4; --muted: #93a3b3; --line: #243040; --accent: #6ea0ff; --ok: #34d399; --code-bg: #05080b; --code-ink: #d6e2ee; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 16px; line-height: 1.55; padding-inline: 16px; padding-block: 24px 40px; }
+.wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 16px; }
+h1 { font-size: clamp(28px, 6vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+.sub { color: var(--muted); margin: 6px 0 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.chip { font: 600 11px/1 var(--font-ui); text-transform: uppercase; letter-spacing: .08em; padding: 7px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--panel); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+.label { font: 600 11px/1.2 var(--font-ui); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+.prompt { background: var(--code-bg); color: var(--code-ink); border-radius: 12px; padding: 16px; font: 14px/1.6 var(--font-mono); white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 10px; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+button { font: 600 15px var(--font-ui); padding: 11px 16px; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+ol { margin: 10px 0 0; padding-left: 22px; display: grid; gap: 8px; }
+.ex { display: grid; gap: 12px; margin-top: 10px; }
+.ex article { border-top: 1px solid var(--line); padding-top: 12px; }
+.ex h3 { margin: 0; font-size: 17px; }
+.ex a { color: var(--accent); overflow-wrap: anywhere; }
+.ex p { margin: 4px 0 0; }
+.ex code { font: 500 13px var(--font-mono); background: color-mix(in srgb, var(--line) 50%, transparent); padding: 1px 5px; border-radius: 5px; overflow-wrap: anywhere; }
+.check { color: var(--ok); font-weight: 600; font-size: 13px; margin-top: 6px; }
+.muted { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Hunt: research a Sui build in one prompt</h1>
+    <p class="sub">Use any chat agent that can browse. You get three official sources and a next step for each, then you check that every link is real.</p>
+    <div class="chips"><span class="chip">No wallet</span><span class="chip">No RPC</span><span class="chip">No install</span><span class="chip">Laptop or phone</span></div>
+  </header>
+
+  <section class="panel">
+    <div class="row">
+      <div class="label">The prompt</div>
+      <button type="button" id="copy">Copy prompt</button>
+    </div>
+    <div class="prompt" id="prompt">Find three useful resources for someone building an agent on Sui. Use official documentation. For each, give the page title, a working URL, a one-sentence summary and one practical next step. Do not connect a wallet, call an RPC or send transactions. If you cannot browse, say so and work only from the source excerpts I supply.</div>
+  </section>
+
+  <section class="panel">
+    <div class="label">Steps</div>
+    <ol>
+      <li>Open a chat agent with web access (Claude, ChatGPT, Gemini or similar).</li>
+      <li>Paste the prompt and send it.</li>
+      <li>Open every link it returns. Check that the page loads and its heading matches the title the agent gave.</li>
+      <li>Pick one next step and do it, or note why you can't.</li>
+      <li>If your agent can't browse, open the three source tabs below, paste a short excerpt from each, and send the prompt again.</li>
+    </ol>
+    <p class="muted" style="margin:12px 0 0">The agent's answer is a claim. The links are the evidence. A link that doesn't load, or a title that doesn't match, means the answer needs work.</p>
+  </section>
+
+  <section class="panel">
+    <div class="label">What a checked answer looks like</div>
+    <div class="ex">
+      <article>
+        <h3>Sui Agent Skills</h3>
+        <a href="https://docs.sui.io/skills" target="_blank" rel="noopener">docs.sui.io/skills</a>
+        <p>Ready-made skills you install into a coding agent: reading onchain data, programmable transaction blocks and Move.</p>
+        <p>Next step: <code>npx skills add mystenlabs/skills --all</code></p>
+        <div class="check">Checked: page loads, heading matches</div>
+      </article>
+      <article>
+        <h3>Sui MCP Server</h3>
+        <a href="https://docs.sui.io/getting-started/sui-mcp-server" target="_blank" rel="noopener">docs.sui.io/getting-started/sui-mcp-server</a>
+        <p>Lets an AI coding assistant search current Sui docs, source and examples. It is a docs search service, not a chain connection.</p>
+        <p>Next step: add <code>https://sui.mcp.kapa.ai</code> as an MCP server in your coding tool.</p>
+        <div class="check">Checked: page loads, heading matches</div>
+      </article>
+      <article>
+        <h3>WaaP for Agents</h3>
+        <a href="https://docs.waap.human.tech/for-agents" target="_blank" rel="noopener">docs.waap.human.tech/for-agents</a>
+        <p>Gives an agent a wallet whose key stays in an attested enclave, with a policy engine that checks each transaction against your limits.</p>
+        <p>Next step: read the spending-limits section before you create an agent wallet.</p>
+        <div class="check">Checked: page loads, heading matches</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="label">Source tabs, if your agent can't browse</div>
+    <ol>
+      <li><a href="https://docs.sui.io/" target="_blank" rel="noopener">docs.sui.io</a></li>
+      <li><a href="https://docs.waap.human.tech/recipes" target="_blank" rel="noopener">docs.waap.human.tech/recipes</a></li>
+      <li><a href="https://docs.tap.human.tech/" target="_blank" rel="noopener">docs.tap.human.tech</a></li>
+    </ol>
+  </section>
+</div>
+
+<script>
+document.getElementById("copy").addEventListener("click", async (e) => {
+  const btn = e.currentTarget, text = document.getElementById("prompt").textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = "Copied"; }
+  catch { const r = document.createRange(); r.selectNodeContents(document.getElementById("prompt")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Selected: copy it"; }
+  setTimeout(() => (btn.textContent = "Copy prompt"), 1800);
+});
+</script>
+</body>
+</html>

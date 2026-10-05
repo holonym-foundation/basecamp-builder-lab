@@ -1,4 +1,4 @@
-# Guard: read-only Sui pool watcher
+# Basecamp Builder Lab: Guard and Hunt
 
 A single web page for the Sui Basecamp Builder Lab. It watches the Cetus USDC/SUI pool on Sui mainnet and simulates where a concentrated-liquidity position would sit. It is the monitor phase of the WaaP [Cetus Yield Agent recipe](https://docs.waap.human.tech/recipes), running in the browser.
 
@@ -11,3 +11,7 @@ A single web page for the Sui Basecamp Builder Lab. It watches the Cetus USDC/SU
 Open the page and press **Start**. Workshop edit: change **Range** from 200 to 400, press **Reset**, then **Start**, and compare the `SIMULATED RANGE` lines.
 
 URL presets: `?range=400&autostart=1` starts with the edit applied; `?threshold=5` makes a rebalance easy to trigger.
+
+## Hunt card
+
+`hunt.html` is the non-chain workshop exercise: one research prompt for any chat agent with browsing, plus steps to check every link it returns.
