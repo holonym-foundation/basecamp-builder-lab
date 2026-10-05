@@ -1,0 +1,183 @@
+BASECAMP PRESENTER COMPANION · V4
+October 7,2026 · 12:30–13:30 SGT · 60 minutes
+Audience: 60 planned; AEX admission: 30 maximum. Default: browser Guard.
+Prepared October 6 from the current workshop source and fallback pack. Installed AEX and fresh transfer still require rehearsal.
+PUBLIC LINKS
+Deck: https://holonym-foundation.github.io/basecamp-builder-lab/deck/
+Guard: https://holonym-foundation.github.io/basecamp-builder-lab/
+Hunt: https://holonym-foundation.github.io/basecamp-builder-lab/hunt.html
+Recipes: https://docs.waap.human.tech/recipes
+Explorer: https://suiscan.xyz/mainnet/
+Default local deck: index.html
+Conditional AEX deck: aex-v4.html
+
+BEFORE THE ROOM OPENS
+Choose the lane during rehearsal, not at the podium.
+
+SCREEN SETUP
+Open the local v4 deck, Guard, Hunt and Suiscan in separate tabs. Keep this companion on a second screen or phone. Increase browser zoom until labels are readable from the back. Use Do Not Disturb. N toggles deck notes in the SAME window; keep notes closed on the audience display.
+
+DEFAULT: BROWSER GUARD
+Guard is the working browser-first route. Its public-page run, 200→400 edit and real receipt check passed again on October 6. Recheck it on the venue network today: Start, three samples, Stop, edit 200 to 400, Reset, Start, then open a real pool transaction. No wallet or installation is needed. This is a live read with a simulated liquidity range; it does not deposit funds.
+
+AEX: CONDITIONAL LANE
+Use AEX only after one fresh participant has completed sign-in, invite admission, sponsored checkout/actual credit allocation, agent start, useful output, cost inspection and verified stop/release in the actual workshop environment. The new /workshop flow is source preparation and is not yet installed. Do not send the audience or its QR there yet. Have the exact rehearsed URL ready; do not substitute another environment.
+
+ADMISSION
+AEX admission is capped at 30 people, one sponsored agent per participant. Attendance can be larger. Additional people use browser Guard and join the waitlist once its destination is active. An admitted seat does not prove a running agent or available compute. Start attendees in the launch batches demonstrated by rehearsal; do not ask all 30 to deploy at once.
+
+45-SECOND RECOVERY
+If a live step cannot proceed after 45 seconds, name the problem and switch to the next working screen. Preserve pending checkout/payment state. Never repeat an ambiguous payment or remove an agent merely to make its card disappear. A recording or saved log is labeled previous evidence.
+
+KEEP THE FIXED SUI MOMENT
+Every route includes an actual Sui pool transaction and its receipt. A new 0.001 SUI transfer is optional and remains unrehearsed. It is not required for the session, not an audience vote option and not a claim that Guard traded.
+
+00:00–06:00 · SET UP THE PROBLEM
+SHOW slides 1–6. Finish the architecture map by 06:00.
+
+TALK TRACK
+“Muse, Instinct and Dots show the personal-agent experience people want. OpenClaw and Hermes make running and extending an agent something builders can do. But the runtime is only part of the job: where does it run, who pays, what can it access, and who can stop it?”
+
+BRIDGE TO AEX
+“AEX brings those questions into one workflow: find resources, agree terms, fund an escrow, identify the agent and inspect its work. Identity and reputation need evidence. Sovereignty means retaining control and a meaningful choice of provider. The security plane governs actions outside the prompt.”
+
+SET THE PROMISE
+“We will change a recipe, inspect a real result and check evidence on Sui. The slides are signposts; most of this session happens in the browser.” Describe architecture as direction where it is not demonstrated. Do not claim every product named is integrated with AEX or that all compute settlement occurs on Sui.
+
+06:00–11:00 · SHOW THE LAYERS
+SHOW slides 7–9, then briefly the selected browser.
+
+EXPLAIN
+Model: interprets the task. Runtime: executes tools and retains context. Services: compute, data and a wallet if the task needs one. Guard is a deterministic monitor, not a language model choosing trades.
+
+SHOW
+Browser lane: open Guard and point to the pool, range controls and log without starting a second run. AEX lane: point to the already-rehearsed agent and its result. Return to slides for discover → agree → escrow → run → settle and identity/reputation.
+
+BUDGET EXPLANATION
+Separate deployment/compute allowance, agent working capital and transaction gas. A SUI balance is not automatically an AEX credit balance. Show actual amounts only when the running environment returns them. Do not promise a free allowance that has not been activated.
+
+11:00–16:00 · AUTHORITY AND EVIDENCE
+SHOW slides 10–12, then the relevant controls.
+
+TALK TRACK
+“A prompt describes a job. Access to a service and permission to move money are separate decisions. We will ask what was allowed, inspect what happened, then stop the process.”
+
+BROWSER PROOF
+Point to Guard’s “Simulated position · no liquidity deposited” and “On-chain activity on this pool · live from Sui mainnet.” The range is our simulation; listed transactions belong to other people and bots.
+
+AEX PROOF
+Show only the recipe permissions actually present in the rehearsed flow. For Airdrop Scout, research/report output is the job; a report is not a signed transaction. Do not use an unproven daily-limit, auto-top-up or transaction-approval selector as evidence of enforcement.
+
+16:00–20:00 · SHOW A FINISHED RESULT
+SHOW slides 13–14 → browser. Pick ONE tour.
+
+BROWSER TOUR
+Open Guard. Point to Pool tick, Samples, the solid simulated band and the dashed real-position outline if one has loaded. Scroll to live pool activity. A dashed outline is a position opened by someone else, not our deposited capital. Avoid quoting a fixed tick or price; live values change.
+
+AEX TOUR, IF READY
+Open the rehearsed Dashboard and selected Scout. Show its actual useful brief and its save/activity status. Identify the owner and recipe. Do not call a draft card or generic chat response a deployed tenant. The exact installed route to its run-cost receipt and release control must already have been written down in rehearsal.
+
+VOTE IN THE ROOM
+Ask for a show of hands: “After the guided build, customize Guard or try Hunt research?” The Sui transaction inspection stays fixed whichever wins. Offer only routes that passed rehearsal. No StrawPoll dependency; replace with a polling QR only after a clean host account and destination are ready.
+
+20:00–34:00 · DEFAULT LANE: GUARD
+SHOW slide 15 for Start, slide 16 for the vote, slide 17 for the edit, slide 18 for the Sui transaction and slide 19 for verification and Stop.
+
+20:00–23:00 · RUN THE BASELINE
+Open https://holonym-foundation.github.io/basecamp-builder-lab/ . Range (± ticks)=200; Rebalance threshold (ticks)=100; leave Check every at its rehearsed default. Click Start. Wait for three Samples. Point to Pool tick and SIMULATED RANGE in the Agent log. Say: “These are live reads. This range is simulated. No liquidity was deposited.”
+
+23:00–24:00 · VOTE
+Use slide 16 and show of hands, Guard versus Hunt. Decide in 45 seconds. The vote chooses the later audience extension; everyone follows the same range edit and Sui evidence step now. If the vote is unclear, use Guard.
+
+24:00–27:00 · MAKE THE CHANGE
+Click Stop first: the range input is disabled while monitoring. Change Range (± ticks) from 200 to 400. Click Reset, then Start. Compare the new lower/upper tick bounds with the baseline. Bounds snap to the pool tick spacing, so do not promise an exact 2× width. Ask one attendee to explain which setting changed.
+
+27:00–31:00 · FIXED SUI TRANSACTION
+Scroll to “On-chain activity on this pool · live from Sui mainnet.” Choose a substantive row such as Add liquidity, Remove liquidity or Swap when available. Click that row’s Suiscan link. Copy the real transaction digest from the transaction page or its /tx/ URL. Return to Guard; paste it into “Transaction digest” under “Check a transaction”; click Check. Inspect Status, Time, Checkpoint, Sender, Gas and Balance change. Click “Open on Suiscan” to compare the same digest. This is someone else’s transaction; Guard observed it and did not send it.
+
+RECEIPT FALLBACK
+October 6 rehearsal receipt: https://holonym-foundation.github.io/basecamp-builder-lab/?tx=Fvdxzog5tBYp3D4gg85PJxd6j4embkbcKyMKowhYnFV8 . Digest: Fvdxzog5tBYp3D4gg85PJxd6j4embkbcKyMKowhYnFV8; checkpoint 330723636. This is a real third-party liquidity transaction, not ours. Label its capture date if using it instead of the latest activity. If no receipt can be displayed, show the pool object read and explicitly say no transaction was demonstrated.
+
+31:00–34:00 · VERIFY AND STOP
+Ask one attendee what the receipt proves. Distinguish the real pool transaction from our simulated position. Click Stop in Guard and verify that Samples no longer increases. The separate activity feed still polls; Stop does not stop every background read. Say: “The output is a claim; the receipt lets us check it.” No compute bill or wallet payment was created by this browser monitor.
+
+20:00–34:00 · CONDITIONAL LANE: AEX
+Use this only after the full participant path passes rehearsal. Keep the same slide timings as the browser lane. A prepared Scout result must already be available in the 16:00–20:00 tour.
+
+BEFORE THIS BLOCK
+Time the actual sign-in → invitation → sponsored checkout → start sequence in rehearsal. Repeat it live only if it fits three minutes. A fresh wallet login, multi-stage checkout and provisioning cannot be guaranteed in that time. If it does not fit, tour the prepared working Scout before 20:00 and use the browser guided lane. Do not compress away cost or stop verification to rescue a slow deployment. Keep Guard open with a range-200 baseline already sampled.
+
+20:00–23:00 · SIGN IN, CLAIM ACCESS, START ONE AGENT
+On the accepted installed workshop page, click Sign in with WaaP. Enter the private invitation off the audience display, then click Reserve my workshop place and confirm once. Show the admitted state and actual allowance/expiry; a reserved place is not a credit transfer. Choose Airdrop Scout. Source-defined fields: Agent name → “Basecamp Sui Scout”; keep Private → Continue → “What should it track?” → paste the prompt below → Continue. Use only the sponsored checkout already rehearsed; labels include “Start free in alpha,” sponsored terms and “Authorize preparation.” Review actual terms and confirm once. Successful preparation alone does not prove deployment. Keep the code for refresh recovery; never put it in a projected URL. Do not use the unrelated legacy header “Claim credits.”
+
+PROMPT TO PREPARE BEFORE PRESENTING
+Find three official resources for building an agent on Sui. For each, include its title, working URL, one-sentence summary and a practical next step. Explain which parts read data and which would require separate wallet authorization. If you cannot browse, say so. Do not sign or send transactions.
+
+BY 23:00 · HARD HANDOFF
+Show the real start/result if it arrives within the rehearsed time. If any step stalls for 45 seconds, preserve the pending request and switch to Guard. Do not pay again. The prepared Scout output from the tour remains the evidence to revisit at 31:00; do not present it as the result of an unfinished new deployment.
+
+23:00–24:00 · VOTE
+Show slide 16. Take hands for Guard or Hunt as the later extension. Decide within 45 seconds. The range experiment and real Sui transaction remain fixed for everyone.
+
+24:00–27:00 · GUARD PARAMETER EXPERIMENT
+Show slide 17, switch to Guard and point to the prepared range-200 baseline. Click Stop, change Range from 200 to 400, click Reset, then Start. Compare the gauge and log. Say that chain data is real while the position is simulated. No liquidity was deposited. Use the browser steps even when AEX is the accepted start path.
+
+27:00–31:00 · FIXED SUI TRANSACTION
+Show slide 18. Use Guard live pool activity → Suiscan → copy the real digest → Guard “Check a transaction” → Check. Inspect sender, balance changes, gas and status. Scout research about Sui does not replace this on-chain evidence. The transaction belongs to someone else; our monitor did not send it. A presenter transfer substitutes only after funded rehearsal and receipt verification, never as a promised new step.
+
+31:00–34:00 · ACTUAL COST AND VERIFIED STOP
+Show slide 19. Return to the useful Scout output prepared during the tour or the now-confirmed new run. Source path: Dashboard → selected Scout → Overview → “Run research now”; do not start another run merely to fill time. Open one cited source and its saved/activity evidence. Inspect the actual settled run-cost receipt, not a monthly estimate or only the owner’s Economy balance. Click “Stop” when available and verify the stopped state. Release paid compute using the exact path verified in rehearsal; stopping work and releasing a lease can be different operations. Exact installed cost/release locations remain PENDING rehearsal. If either is unproved, AEX is an optional preview and the browser lane is the guided route.
+
+34:00–51:00 · LET THE ROOM BUILD
+SHOW slides 20–22, then leave the relevant tool visible.
+
+34:00–36:00 · SPLIT ONCE
+Everyone can use Guard in a browser. If the AEX lane is installed and accepted, admit at most 30 and launch in the rehearsed batches. Other participants stay on Guard or work in pairs; offer the waitlist when active. Phones work for the browser lab; a laptop is easier for comparing tabs. Do not provision new cloud workspaces or install dependencies in this block.
+
+36:00–46:00 · GUARD EXERCISE
+Click Stop. Try Range=300 or 400, or Rebalance threshold=5. Click Reset, then Start. Watch for “would rebalance” only if the pool moves enough; lowering the threshold does not force market movement. Click Copy log and save it in a local note. Success: one changed setting, a real sampled tick/checkpoint, and an explanation of the simulation.
+
+36:00–46:00 · HUNT EXERCISE
+Open https://holonym-foundation.github.io/basecamp-builder-lab/hunt.html . Click Copy prompt. Paste into the already-working chat agent with browsing. Ask for three official resources, then open the links and verify titles/content. If browsing fails, read the supplied official-source cards and label the answer as based on those sources. Hunt needs no wallet or chain transaction. Do not promise that every chat agent can browse.
+
+AEX PARTICIPANTS
+Use the accepted Scout path only. Change the research question, request one result, inspect the run cost, then stop. A wallet grant, compute credits and an agent’s operating capital are separate; do not swap or fund from the podium to repair an untested path.
+
+46:00–51:00 · SAVE AND CHOOSE TWO SHARES
+Guard: click Stop, then Copy log; note the changed range and transaction link. Hunt: save prompt, result and checked sources. AEX: save the useful result and cost evidence; verify stop/release rather than deleting a card. Ask two volunteers for a 45-second explanation: change, result, evidence. No keys, passwords or private invitation codes in shared artifacts.
+
+51:00–57:00 · SHARE EVIDENCE
+SHOW slides 23–24, with two short participant browser shares.
+
+ASK
+“What did you change? What result did you get? What evidence would let someone else check it?” A failed attempt can show its error and next diagnostic step without being called a successful deployment.
+
+RESOURCE HANDOFF
+Share the public Guard and Hunt pages and the WaaP recipe library. State the actual hosted-access expiry only if active and known. No indefinite-hosting promise. An AEX draft is not a published marketplace listing; demonstrate publishing only if that exact route passed rehearsal.
+
+57:00–60:00 · CLOSE AND STOP
+SHOW slide 25. No new deployment.
+
+TALK TRACK
+“Agents need resources, authority and evidence. You changed a recipe, inspected a result and checked a real Sui record. Keep the question small enough that you can explain what the agent did.”
+
+FINISH
+Take one or two questions. Stop Guard and any presenter monitoring process. Verify the demonstrated AEX agent is stopped and its release outcome is recorded if that lane was used. Save the actual receipt. End on time.
+
+RECOVERY CARD
+Spend no more than 45 seconds recovering a live step.
+
+AEX ACCESS OR CHECKOUT FAILS
+Keep the existing request/receipt. Move to browser Guard; do not pay again or share a company login. A code is admission, not proof that the backend is ready.
+
+GUARD OR EXPLORER NETWORK FAILS
+Use the saved Guard baseline/edited logs from rehearsal, clearly labeled previous live reads. If an actual captured receipt exists, show that with its date. Otherwise use Hunt’s source cards and a recipe-writing exercise. Do not fabricate a digest or call offline output live.
+
+HUNT MODEL OR BROWSING FAILS
+Read the official-source cards already open in the Hunt page. Ask attendees to write the task, inputs, permissions and a verifiable result. A non-chain backup stays useful without pretending inference worked.
+
+A TRANSFER TIMES OUT
+Preserve the operation/digest. Check its existing outcome; never resend as a blind retry. Continue the pool-transaction evidence path.
+
+REHEARSAL SIGN-OFF
+Choose browser Guard unless every AEX step above passes. Record exact URLs, timestamps, receipt and cost location, and stop/release outcome. Do not give the audience a not-yet-installed workshop link.
