@@ -86,6 +86,25 @@ button:disabled { opacity: .5; cursor: default; }
 .termhead { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
 ol.steps { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; }
 ol.steps code, p code { font: 500 13px var(--font-mono); background: color-mix(in srgb, var(--line) 50%, transparent); padding: 1px 5px; border-radius: 5px; }
+.realband { position: absolute; top: 15px; bottom: 15px; border: 2px dashed var(--ok); border-radius: 6px; transition: left .4s, width .4s; }
+.real { margin-top: 8px; font-size: 13px; color: var(--muted); }
+.real b { color: var(--ok); font-weight: 600; }
+.acts { list-style: none; margin: 10px 0 0; padding: 0; display: grid; }
+.acts li { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 4px 12px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--line); }
+.acts li:first-child { border-top: 0; }
+.acts .t { font: 500 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.acts .what { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.acts .what span { display: block; font-weight: 400; color: var(--muted); font-size: 13px; }
+.acts a { white-space: nowrap; font-size: 13px; }
+@media (max-width: 460px) { .acts li { grid-template-columns: 1fr auto; } .acts .t { grid-column: 1 / -1; } }
+.txrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.txrow input { flex: 1 1 260px; min-width: 0; font: 500 14px var(--font-mono); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.txrow input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin-top: 12px; font-size: 14px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.pill { display: inline-block; font: 600 11px/1 var(--font-ui); letter-spacing: .06em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; }
+.pill.ok { color: var(--ok); border: 1px solid var(--ok); } .pill.bad { color: var(--warn); border: 1px solid var(--warn); }
 footer { color: var(--muted); font-size: 13px; display: grid; gap: 4px; }
 footer a, .panel a { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) { .bandfill, .center, .marker { transition: none; } }
@@ -95,13 +114,13 @@ footer a, .panel a { color: var(--accent); }
 <div class="wrap">
   <header>
     <h1>Guard
-      <small>A read-only Sui agent that watches a Cetus pool and simulates a liquidity range.</small>
+      <small>A read-only Sui agent that watches a Cetus pool, simulates a liquidity range, and shows the real transactions behind it.</small>
     </h1>
     <div class="chips" aria-label="Safety">
       <span class="chip live" id="netChip">Sui mainnet</span>
       <span class="chip">Read-only</span>
       <span class="chip">No wallet</span>
-      <span class="chip">No transactions</span>
+      <span class="chip">Sends nothing</span>
     </div>
   </header>
 
@@ -117,10 +136,12 @@ footer a, .panel a { color: var(--accent); }
         <div class="label">Simulated position · no liquidity deposited</div>
         <div class="track" id="track" role="img" aria-label="Simulated range and current tick">
           <div class="bandfill" id="band" style="left:25%;width:50%"></div>
+          <div class="realband" id="realBand" hidden></div>
           <div class="center" id="centerLine" style="left:50%"></div>
           <div class="marker" id="marker" style="left:50%"></div>
         </div>
         <div class="ticks"><span id="lowerT">lower —</span><span id="centerT">center —</span><span id="upperT">upper —</span></div>
+        <div class="real" id="realLine">Dashed outline: the latest real position someone opened on this pool, read from chain.</div>
       </div>
       <div class="status" id="status"><span class="dot"></span><span id="statusText">Press Start to read the pool.</span></div>
     </section>
@@ -163,6 +184,25 @@ footer a, .panel a { color: var(--accent); }
   </section>
 
   <section class="panel">
+    <div class="termhead">
+      <div class="label">On-chain activity on this pool · live from Sui mainnet</div>
+      <span class="hint" id="actMeta">refreshes every 15 seconds</span>
+    </div>
+    <ul class="acts" id="acts"><li><span class="t">—</span><span class="what">Loading the latest transactions…</span><span></span></li></ul>
+    <p class="hint" style="margin:10px 0 0">Real transactions from other people and bots. Guard only reads them. Each link opens the transaction on Suiscan.</p>
+  </section>
+
+  <section class="panel">
+    <div class="label">Check a transaction</div>
+    <p class="hint" style="margin:6px 0 0">Paste a Sui transaction digest to see what actually happened: status, sender, amounts and gas, read live from chain.</p>
+    <form class="txrow" id="txForm" autocomplete="off">
+      <input id="txInput" type="text" inputmode="text" spellcheck="false" placeholder="Transaction digest, e.g. 3L8QXdexFi…" aria-label="Transaction digest">
+      <button type="submit" class="primary">Check</button>
+    </form>
+    <div id="txOut" aria-live="polite"></div>
+  </section>
+
+  <section class="panel">
     <div class="label">Exercise</div>
     <ol class="steps">
       <li>Press <b>Start</b>. Watch three samples arrive and note the simulated range.</li>
@@ -185,7 +225,16 @@ footer a, .panel a { color: var(--accent); }
   const POOL = "0xb8d7d9e66a60c239e7a60110efcf8de6c705580ed924d0dde141f4a0e2c90105";
   const $ = (id) => document.getElementById(id);
   const term = $("term");
-  let timer = null, samples = 0, sim = null, meta = null, lastTick = null, busy = false;
+  const EXP = "https://suiscan.xyz/mainnet";
+  let timer = null, samples = 0, sim = null, meta = null, lastTick = null, busy = false, realPos = null;
+  const coinCache = {};
+
+  function link(href, text) {
+    const a = document.createElement("a");
+    a.href = href; a.target = "_blank"; a.rel = "noopener"; a.textContent = text;
+    return a;
+  }
+  const short = (s) => s.slice(0, 6) + "…" + s.slice(-4);
 
   const toI32 = (bits) => { const n = Number(bits); return n >= 2 ** 31 ? n - 2 ** 32 : n; };
   const align = (t, s) => Math.round(t / s) * s;   // matches the recipe's monitor mode
@@ -244,11 +293,17 @@ footer a, .panel a { color: var(--accent); }
     $("tick").textContent = fmt(p.tick);
     $("tickSub").textContent = `tick spacing ${p.spacing}`;
     $("samples").textContent = samples;
-    $("lastRead").textContent = `checkpoint ${fmt(Number(p.checkpoint))}`;
+    const cp = $("lastRead"); cp.textContent = "";
+    cp.append("checkpoint ", link(EXP + "/checkpoint/" + p.checkpoint, fmt(Number(p.checkpoint))));
     if (!sim) return;
     const pad = Math.max(cfg.range * 0.6, 60);
     const lo = sim.lower - pad, hi = sim.upper + pad, span = hi - lo;
     const pct = (t) => Math.min(100, Math.max(0, ((t - lo) / span) * 100));
+    if (realPos) {
+      $("realBand").hidden = false;
+      $("realBand").style.left = pct(realPos.lower) + "%";
+      $("realBand").style.width = Math.max(0.6, pct(realPos.upper) - pct(realPos.lower)) + "%";
+    }
     $("band").style.left = pct(sim.lower) + "%";
     $("band").style.width = (pct(sim.upper) - pct(sim.lower)) + "%";
     $("centerLine").style.left = pct(sim.center) + "%";
@@ -332,11 +387,145 @@ footer a, .panel a { color: var(--accent); }
     line("---- reset ----", "dim");
   }
 
-  // Optional presets for QR links: ?range=400&threshold=5&autostart=1
+  // ---------- On-chain activity: real transactions touching this pool ----------
+  const amt = (raw, dec) => {
+    const v = Number(raw) / 10 ** dec;
+    return v.toLocaleString("en-US", { maximumFractionDigits: v >= 100 ? 0 : v >= 1 ? 2 : 4 });
+  };
+  const pair = (j) => `${amt(j.amount_a, meta.a.decimals)} ${meta.a.symbol} + ${amt(j.amount_b, meta.b.decimals)} ${meta.b.symbol}`;
+  const rng = (j) => `${fmt(toI32(j.tick_lower.bits))} → ${fmt(toI32(j.tick_upper.bits))}`;
+  const RULES = [
+    ["SwapEvent", (j) => j.atob
+      ? ["Swap", `${amt(j.amount_in, meta.a.decimals)} ${meta.a.symbol} → ${amt(j.amount_out, meta.b.decimals)} ${meta.b.symbol}`]
+      : ["Swap", `${amt(j.amount_in, meta.b.decimals)} ${meta.b.symbol} → ${amt(j.amount_out, meta.a.decimals)} ${meta.a.symbol}`]],
+    ["AddLiquidityV2Event", (j) => ["Add liquidity", `range ${rng(j)} · ${pair(j)}`]],
+    ["AddLiquidityEvent", (j) => ["Add liquidity", `range ${rng(j)} · ${pair(j)}`]],
+    ["RemoveLiquidityV2Event", (j) => ["Remove liquidity", `range ${rng(j)} · ${pair(j)}`]],
+    ["RemoveLiquidityEvent", (j) => ["Remove liquidity", `range ${rng(j)} · ${pair(j)}`]],
+    ["OpenPositionEvent", (j) => ["Open position", `range ${rng(j)}`]],
+    ["ClosePositionEvent", () => ["Close position", ""]],
+    ["CollectFeeEvent", (j) => ["Collect fees", pair(j)]],
+    ["CollectRewardV2Event", () => ["Collect rewards", ""]],
+    ["CollectProtocolFeeEvent", (j) => ["Protocol fee", pair(j)]],
+  ];
+  function poolEvents(tx) {
+    return tx.effects.events.nodes.map((n) => n.contents)
+      .filter((c) => c.type.repr.includes("::pool::") && c.json && c.json.pool === POOL)
+      .map((c) => ({ kind: c.type.repr.split("::").pop(), json: c.json }));
+  }
+  function describe(evs) {
+    for (const [kind, fn] of RULES) {
+      const hit = evs.find((e) => e.kind === kind);
+      if (hit) { try { const [t, d] = fn(hit.json); return [t, d, evs.length - 1]; } catch { return [kind, "", evs.length - 1]; } }
+    }
+    return ["Uses this pool", "reads or routes through it", 0];
+  }
+
+  async function loadActivity() {
+    try {
+      if (!meta) meta = await loadMeta();
+      const d = await gql(`{ transactions(last: 50, filter: { affectedObject: "${POOL}" }) { nodes { digest sender { address } effects { status timestamp events(first: 50) { nodes { contents { type { repr } json } } } } } } }`);
+      const all = d.transactions.nodes.slice().reverse();     // newest first
+      const withEv = all.map((tx) => ({ tx, evs: poolEvents(tx) }));
+      const acting = withEv.filter((x) => x.evs.length).slice(0, 6);
+      const readers = withEv.filter((x) => !x.evs.length);
+      const ul = $("acts"); ul.textContent = "";
+      const txs = all;
+      for (const { tx, evs } of acting) {
+        const [title, detail, more] = describe(evs);
+        const posEv = evs.find((e) => e.kind === "OpenPositionEvent" || e.kind.startsWith("AddLiquidity"));
+        if (posEv && (!realPos || tx.effects.timestamp > realPos.at)) {
+          realPos = { lower: toI32(posEv.json.tick_lower.bits), upper: toI32(posEv.json.tick_upper.bits), digest: tx.digest, at: tx.effects.timestamp };
+        }
+        const li = document.createElement("li");
+        const t = document.createElement("span"); t.className = "t"; t.textContent = new Date(tx.effects.timestamp).toLocaleTimeString("en-GB");
+        const w = document.createElement("span"); w.className = "what";
+        w.textContent = title + (tx.effects.status === "SUCCESS" ? "" : " (failed)");
+        const sub = document.createElement("span");
+        sub.append(detail ? detail + " · " : "", "by ", link(EXP + "/account/" + tx.sender.address, short(tx.sender.address)), more > 0 ? ` · +${more} more pool actions` : "");
+        w.appendChild(sub);
+        const a = link(EXP + "/tx/" + tx.digest, "Suiscan ↗");
+        li.append(t, w, a); ul.appendChild(li);
+      }
+      if (readers.length) {
+        const li = document.createElement("li");
+        const t = document.createElement("span"); t.className = "t"; t.textContent = "also";
+        const w = document.createElement("span"); w.className = "what";
+        w.textContent = `${readers.length} more transactions read this pool`;
+        const sub = document.createElement("span");
+        sub.textContent = "Trading bots and aggregators checking its price without changing liquidity.";
+        w.appendChild(sub);
+        li.append(t, w, link(EXP + "/tx/" + readers[0].tx.digest, "example ↗")); ul.appendChild(li);
+      }
+      if (!acting.length && !readers.length) ul.textContent = "No recent transactions found.";
+      if (txs.length) {
+        const span = (new Date(txs[0].effects.timestamp) - new Date(txs[txs.length - 1].effects.timestamp)) / 1000;
+        $("actMeta").textContent = `${txs.length} transactions in the last ${Math.max(1, Math.round(span))}s · refreshes every 15s`;
+      }
+      if (realPos) {
+        const rl = $("realLine"); rl.textContent = "";
+        rl.append("Dashed outline: a real position opened on this pool at ",
+          Object.assign(document.createElement("b"), { textContent: `${fmt(realPos.lower)} → ${fmt(realPos.upper)}` }),
+          " · ", link(EXP + "/tx/" + realPos.digest, "see the transaction ↗"));
+      }
+    } catch (e) {
+      $("actMeta").textContent = "couldn't load activity (" + e.message + "); retrying";
+    }
+  }
+
+  // ---------- Check a transaction by digest ----------
+  async function coin(type) {
+    if (coinCache[type]) return coinCache[type];
+    try {
+      const d = await gql(`{ coinMetadata(coinType: "${type}") { decimals symbol } }`);
+      coinCache[type] = d.coinMetadata || { decimals: 0, symbol: type.split("::").pop() };
+    } catch { coinCache[type] = { decimals: 0, symbol: type.split("::").pop() }; }
+    return coinCache[type];
+  }
+  async function checkTx(digest) {
+    const out = $("txOut"); out.textContent = "";
+    digest = digest.trim();
+    if (!/^[1-9A-HJ-NP-Za-km-z]{43,44}$/.test(digest)) { out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "That doesn't look like a Sui transaction digest. It is 43 or 44 letters and digits." })); return; }
+    out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "Reading from Sui…" }));
+    try {
+      if (!meta) meta = await loadMeta();
+      const d = await gql(`{ transaction(digest: "${digest}") { digest sender { address } effects { status timestamp checkpoint { sequenceNumber } gasEffects { gasSummary { computationCost storageCost storageRebate } } balanceChanges(first: 20) { nodes { owner { address } amount coinType { repr } } } events(first: 50) { nodes { contents { type { repr } json } } } } } }`);
+      out.textContent = "";
+      const tx = d.transaction;
+      if (!tx) { out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "Not found on Sui mainnet. Check the digest, or wait a few seconds if it was just sent." })); return; }
+      const e = tx.effects, g = e.gasEffects.gasSummary;
+            const dl = document.createElement("dl"); dl.className = "kv";
+      const row = (k, v) => { const dt = document.createElement("dt"); dt.textContent = k; const dd = document.createElement("dd"); dd.append(...[].concat(v)); dl.append(dt, dd); };
+      row("Status", Object.assign(document.createElement("span"), { className: "pill " + (e.status === "SUCCESS" ? "ok" : "bad"), textContent: e.status === "SUCCESS" ? "Success" : "Failed" }));
+      row("Time", new Date(e.timestamp).toLocaleString("en-GB"));
+      row("Checkpoint", link(EXP + "/checkpoint/" + e.checkpoint.sequenceNumber, fmt(Number(e.checkpoint.sequenceNumber))));
+      row("Sender", link(EXP + "/account/" + tx.sender.address, short(tx.sender.address)));
+      const comp = Number(g.computationCost) / 1e9, stor = (Number(g.storageCost) - Number(g.storageRebate)) / 1e9;
+      row("Gas", `${comp.toFixed(6)} SUI compute · storage ${stor >= 0 ? stor.toFixed(6) + " SUI" : "refund " + (-stor).toFixed(6) + " SUI"}`);
+      for (const b of e.balanceChanges.nodes.slice(0, 8)) {
+        const m = await coin(b.coinType.repr), v = Number(b.amount) / 10 ** m.decimals;
+        row("Balance change", [b.owner ? link(EXP + "/account/" + b.owner.address, short(b.owner.address)) : "object", ` ${v > 0 ? "+" : ""}${v.toLocaleString("en-US", { maximumFractionDigits: 6 })} ${m.symbol}`]);
+      }
+      const evs = poolEvents(tx);
+      if (evs.length) { const [t, dsc] = describe(evs); row("On this pool", `${t}${dsc ? " · " + dsc : ""}`); }
+      row("Explorer", link(EXP + "/tx/" + tx.digest, "Open on Suiscan ↗"));
+      out.appendChild(dl);
+    } catch (err) {
+      out.textContent = "";
+      out.append(Object.assign(document.createElement("p"), { className: "hint", textContent: "Couldn't read Sui right now (" + err.message + "). Try again in a moment." }));
+    }
+  }
+  $("txForm").addEventListener("submit", (ev) => { ev.preventDefault(); checkTx($("txInput").value); });
+
+  loadActivity();
+  setInterval(loadActivity, 15000);
+
+  // Optional presets for QR links: ?range=400&threshold=5&autostart=1&tx=<digest>
   const q = new URLSearchParams(location.search);
   if (q.get("range")) $("range").value = q.get("range");
   if (q.get("threshold")) $("threshold").value = q.get("threshold");
   if (q.get("autostart") === "1") setTimeout(start, 0);
+  if (q.get("tx")) { $("txInput").value = q.get("tx"); checkTx(q.get("tx")); }
 
   $("startBtn").addEventListener("click", start);
   $("stopBtn").addEventListener("click", stop);

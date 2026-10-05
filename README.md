@@ -5,6 +5,8 @@ A single web page for the Sui Basecamp Builder Lab. It watches the Cetus USDC/SU
 - Reads one public pool object from `graphql.mainnet.sui.io`.
 - No wallet, no keys, no transactions, no backend.
 - Same output lines as the terminal version of the recipe.
+- Shows the latest real transactions on the pool and the most recent real position opened on it, each linked to Suiscan.
+- **Check a transaction**: paste any Sui digest (or use `?tx=<digest>`) to see its status, sender, balance changes and gas, read live from chain.
 
 ## Use it
 
