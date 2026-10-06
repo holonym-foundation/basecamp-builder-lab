@@ -1,4 +1,4 @@
-# Basecamp Builder Lab: Guard and Hunt
+# Basecamp Builder Lab: Rebalancer and Guardian
 
 A single web page for the Sui Basecamp Builder Lab. It watches the Cetus USDC/SUI pool on Sui mainnet and simulates where a concentrated-liquidity position would sit. It is the monitor phase of the WaaP [Cetus Yield Agent recipe](https://docs.waap.human.tech/recipes), running in the browser.
 
@@ -21,3 +21,20 @@ URL presets: `?range=400&autostart=1` starts with the edit applied; `?threshold=
 ## Agent wallet quickstart
 
 `cli.html` walks a builder through the WaaP CLI on Sui testnet: create an agent wallet, check its policy, fund it from the faucet, send a transaction and verify it on chain. Every step was tested with waap-cli 2.2.1.
+
+
+## Follow along with a starter
+
+Open [build.html](https://holonym-foundation.github.io/basecamp-builder-lab/build.html). It links the two lead workshop loops, the public starter skills, the hosted catalogue and the wider docs recipes.
+
+- **Rebalancer:** public live Sui pool price + simulated holdings; proposes an allocation change.
+- **Guardian:** labelled lending scenarios + capped protective proposal; no live position or repayment.
+- Download `builders/workshop-agent.mjs` and run with Node 24. No dependencies, wallet or backend. The browser uses the same module.
+- `builders/SKILL.md` adds an optional explain/change/compare flow for a builder's already configured coding agent.
+- The full Guardian starter is not in the checked public agent-exchange repository. Do not describe this lesson as that deployment.
+
+Run `node --test builders/workshop-agent.test.mjs` to check decisions and failure cases.
+
+## Deck and presenter guide
+
+The two v4 HTML entry points use the same participant route. `deck/presenter.html` has the exact screen switches, commands and timing. `scripts/update-builder-deck.py` updates both variants and regenerates the presenter guide from their slide cues. QR assets are local. This update does not regenerate the older venue PDF/PPTX.
