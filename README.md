@@ -47,3 +47,15 @@ The attendee form is [register.html](https://holonym-foundation.github.io/baseca
 GitHub Pages hosts the form; the public registration backend stores submissions and enforces the 15-minute window, first 30 places, waitlist and duplicate rules. Only the Pages origin and the backend's own origin may submit through browsers. Operator controls and exports require the separate private key; it is never part of this repository.
 
 The operator opens the real window only after announcing the measured allowance and confirming wallet/network instructions. Public hosting does not open registration or send funds. See the funding fallback PR for the export and local payout runbook.
+
+
+## Present without typing commands
+
+The programme title stays **Trade. Guard. Hunt. Claim. Build Agents That Do It All.**
+
+- At minute 20 show **Build QR**: everyone opens the builder guide.
+- Around minute 21, optionally open the funding window and briefly show **Funding QR**; return to Build QR. Registration runs in parallel and is not a prerequisite for the lessons.
+- At minutes 23–34 click **Run Rebalancer** or **Run Guardian** inside the deck. The embedded five-step walkthrough executes the same browser helper as the downloadable source: baseline, change, compare, inspect evidence, save. Lead one recipe with the room following along.
+- At minute 34 return to **Now make it yours**. Participants work independently until minute 51, then share their results.
+
+The embedded demo uses `build.html?present=1#rebalancer` or `#guardian`. Run buttons execute in the browser; they do not execute a shell on the presenter's laptop. Local terminal commands remain optional. The presenter companion has the detailed cues.
