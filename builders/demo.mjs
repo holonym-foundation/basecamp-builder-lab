@@ -76,3 +76,4 @@ $('save').onclick=()=>{
 };
 for(const [slug,name]of [['dca-accumulator','DCA Accumulator'],['gem-hunter','Gem Hunter'],['farm','Airdrop Farmer'],['claim-watch','Claim Watch'],['security-guard','Security Guard'],['gas-claims-reminder','Gas & Claims'],['privacy-guard','Privacy Guard']]){const li=document.createElement('li'),a=document.createElement('a');a.textContent=name;a.href='https://github.com/holonym-foundation/agent-exchange/tree/95ce4629f060717b6c243ea2acb97a01d3047303/skills/'+slug;li.append(a);$('skills').append(li);}
 choose(location.hash==='#guardian'?'guardian':'rebalancer',false);
+setBusy(false); // Enable controls only after the module and selected recipe are ready.
