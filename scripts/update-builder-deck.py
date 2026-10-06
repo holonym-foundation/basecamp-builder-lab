@@ -30,6 +30,24 @@ function protect(a){a.target='_blank';a.rel='noopener noreferrer';for(const type
 for(const [id,keys]of Object.entries(links)){const nav=document.createElement('nav');nav.className='workshop-actions';nav.setAttribute('aria-label','Workshop links');for(const key of keys){const a=document.createElement('a');a.className='workshop-link';a.textContent=defs[key][0];a.href=defs[key][1];protect(a);nav.append(a);}document.querySelector('#slide-'+id).append(nav);}
 for(const id of ['s14','s19']){const box=document.createElement('div');box.className='workshop-qr';const a=document.createElement('a');a.href=base+'build.html';protect(a);const img=document.createElement('img');img.src='data:image/png;base64,QR';img.alt='Scan to choose Rebalancer or Guardian';a.append(img,document.createTextNode('Choose your build'));const p=document.createElement('p');p.textContent='Local code + browser lesson';box.append(a,p);document.querySelector('#slide-'+id).append(box);}
 })();</script>'''.replace('BASE',json.dumps(base)).replace('QR',qr)
+funding_config = ROOT/'funding-registration.json'
+if funding_config.exists():
+    registration = json.loads(funding_config.read_text())
+    funding_qr = base64.b64encode((ROOT/'assets/funding-qr.png').read_bytes()).decode()
+    js += '''<script>(()=>{
+const form=FORM, fundingQR='data:image/png;base64,FUNDING_IMAGE';
+for(const id of ['s14','s19']){
+ const slide=document.querySelector('#slide-'+id),box=slide.querySelector('.workshop-qr'),a=box.querySelector('a'),img=box.querySelector('img'),p=box.querySelector('p');
+ const buildURL=a.href,buildQR=img.src;
+ const controls=document.createElement('div');controls.style.cssText='display:flex;gap:12px;justify-content:center;margin-top:18px';
+ for(const mode of ['Build QR','Funding QR']){
+  const b=document.createElement('button');b.type='button';b.className='workshop-link secondary';b.style.cssText='font-size:21px;padding:10px 16px;cursor:pointer';b.textContent=mode;b.setAttribute('aria-pressed',String(mode==='Build QR'));
+  for(const type of ['click','keydown'])b.addEventListener(type,e=>e.stopPropagation());
+  b.addEventListener('click',()=>{const funding=mode==='Funding QR';a.href=funding?form:buildURL;img.src=funding?fundingQR:buildQR;img.alt=funding?'Scan to request workshop funding':'Scan to choose Rebalancer or Guardian';a.lastChild.textContent=funding?'Workshop funding':'Choose your build';p.textContent=funding?'15-minute window · 30 funded places':'Local code + browser lesson';controls.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});controls.append(b);
+ }
+ box.append(controls);
+}
+})();</script>'''.replace('FORM',json.dumps(registration['url'])).replace('FUNDING_IMAGE',funding_qr)
 for name in ['index.html','aex-v4.html']:
     path=ROOT/'deck'/name;p=path.read_text()
     match=re.search(r'window.SLIDES\s*=\s*(\[.*?\]);',p,re.S);slides=json.loads(match[1])
