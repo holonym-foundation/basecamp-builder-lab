@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Workshop funding · Sui Basecamp</title><link rel="stylesheet" href="assets/registration.css"></head>
+<body><main>
+<header><a href="deck/">human.tech <span>× Sui Basecamp</span></a><span class="pill">AI Builder Lab</span></header>
+<section class="card">
+<p class="eyebrow" id="eyebrow">WORKSHOP FUNDING</p>
+<h1>A little SUI.<br>Your next build.</h1>
+<p class="intro">Register your agent wallet for the workshop allowance. Keep building while the hosts review registrations.</p>
+<div id="intake">
+<div class="window" role="status"><span class="dot" id="dot"></span><span id="window">Checking registration…</span></div>
+<button id="retry" class="secondary retry" type="button" hidden>Check connection again</button>
+<form id="registration">
+<label for="code">Your workshop code</label><input id="code" name="code" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="Code from your host" required maxlength="64">
+<label for="address">Your Sui wallet address</label><textarea id="address" name="address" autocomplete="off" spellcheck="false" autocapitalize="none" placeholder="0x…" required maxlength="66" rows="2"></textarea>
+<p class="small" id="network">Use your agent wallet’s Sui address. No password or recovery phrase.</p>
+<p id="error" class="error" role="alert" hidden></p>
+<button id="submit" type="submit" disabled><span id="submit-label">Register wallet</span><span aria-hidden="true">↗</span></button>
+</form>
+</div>
+<div id="confirmation" class="notice success" role="status" tabindex="-1" hidden><span class="status-icon" aria-hidden="true">✓</span><h2 id="result-title"></h2><p id="result-message"></p><p class="small">This is your registration, not a transfer receipt.</p><details><summary>Your registration receipt</summary><code id="receipt"></code></details></div>
+<div class="facts"><span>15-minute window</span><span>30 funding places</span><span>One code per person</span></div>
+<p class="privacy">Your code and wallet address are saved privately for workshop funding and receipt reconciliation. Further eligible registrations join the waitlist. Funding is reviewed by the hosts; this form does not connect to or control your wallet.</p>
+</section>
+<footer><a href="build.html">Back to the builder guides ↗</a><span>Build on Sui.</span></footer>
+</main><script type="module" src="assets/registration.mjs"></script></body></html>

@@ -97,7 +97,7 @@ Presenter notes stay on a private display. AEX rehearsal state belongs to Studio
 
 20:00–23:00 | Choose your build.
 SHOW: QR → build.html → terminal
-DO: Scan the guide QR. Download workshop-agent.mjs. Open a terminal in its folder. Run node --version (Node 24), then node workshop-agent.mjs rebalancer OR node workshop-agent.mjs guardian --scenario at-risk. No npm install. Open funding registration now only when a real form and approved amount/network are ready; it closes 15 minutes later. Funding QR is separate.
+DO: Scan the guide QR. Download workshop-agent.mjs. Open a terminal in its folder. Run node --version (Node 24), then node workshop-agent.mjs rebalancer OR node workshop-agent.mjs guardian --scenario at-risk. No npm install. Open funding registration now only when a real form and approved amount/network are ready; it closes 15 minutes later. Click Funding QR below the builder QR to show the registration link, then Build QR to return.
 SAY: Each person chooses one build. You can finish it without AEX or a funded wallet.
 LOOK FOR: JSON output or the browser Run once alternative.
 FALLBACK: After 45 seconds of setup trouble, use the identical browser lesson.

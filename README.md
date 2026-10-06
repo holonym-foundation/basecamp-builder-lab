@@ -38,3 +38,12 @@ Run `node --test builders/workshop-agent.test.mjs` to check decisions and failur
 ## Deck and presenter guide
 
 The two v4 HTML entry points use the same participant route. `deck/presenter.html` has the exact screen switches, commands and timing. `scripts/update-builder-deck.py` updates both variants and regenerates the presenter guide from their slide cues. QR assets are local. This update does not regenerate the older venue PDF/PPTX.
+
+
+## Workshop registration
+
+The attendee form is [register.html](https://holonym-foundation.github.io/basecamp-builder-lab/register.html), on the same GitHub Pages site as the deck. No ChatGPT sign-in or wallet connection is required. The deck's build slides offer a **Build QR / Funding QR** toggle.
+
+GitHub Pages hosts the form; the public registration backend stores submissions and enforces the 15-minute window, first 30 places, waitlist and duplicate rules. Only the Pages origin and the backend's own origin may submit through browsers. Operator controls and exports require the separate private key; it is never part of this repository.
+
+The operator opens the real window only after announcing the measured allowance and confirming wallet/network instructions. Public hosting does not open registration or send funds. See the funding fallback PR for the export and local payout runbook.
