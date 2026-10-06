@@ -1,7 +1,7 @@
-BASECAMP · REBALANCER + GUARDIAN
+TRADE. GUARD. HUNT. CLAIM. BUILD AGENTS THAT DO IT ALL.
 
-0:00–0:30 | Rebalance.
-Protect.
+0:00–0:30 | Trade. Guard.
+Hunt. Claim.
 CUE OPEN | 00:00–00:30 | SHOW: Slides
 DO: Start the timer. Introduce yourself and the promise: one useful result, one change, and evidence.
 SAY: Today we will go from an instruction to a result we can inspect. The slides are signposts; we will spend the build on screen.
@@ -87,68 +87,68 @@ LOOK FOR: The full Guardian is not in the checked public repo. These are worksho
 FALLBACK: Browser lessons need no wallet.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-18:00–20:00 | Tour the agent, then its decision.
-SHOW: build.html → chosen card → source file
-DO: Open build.html. Click Rebalancer, then Guardian. Show download, command, change, output and source links. If the complete AEX flow passed coordinator rehearsal, optionally show its catalogue → starter detail → configure → launch → output → cost → stop; otherwise stay on this local tour.
-SAY: The same job can be packaged in a runtime later. Today we can inspect the decision directly.
-LOOK FOR: Participants know where to run and where to read output.
-FALLBACK: Do not spend this block repairing AEX.
+18:00–20:00 | Watch the flow first.
+SHOW: Deck → embedded walkthrough → back to slides
+DO: Click Run Rebalancer or Run Guardian. Point to the numbered steps without running ahead. Return to slide 15 for the builder QR. An AEX app tour is optional only if the coordinator has accepted the full launch/output/cost/stop path.
+SAY: First I will show you the route. Then we will run it together.
+LOOK FOR: Everyone sees where the run, change, evidence and save controls are.
+FALLBACK: Use the browser lesson; no terminal setup is required.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-20:00–23:00 | Choose your build.
-SHOW: QR → build.html → terminal
-DO: Scan the guide QR. Download workshop-agent.mjs. Open a terminal in its folder. Run node --version (Node 24), then node workshop-agent.mjs rebalancer OR node workshop-agent.mjs guardian --scenario at-risk. No npm install. Open funding registration now only when a real form and approved amount/network are ready; it closes 15 minutes later. Click Funding QR below the builder QR to show the registration link, then Build QR to return.
-SAY: Each person chooses one build. You can finish it without AEX or a funded wallet.
-LOOK FOR: JSON output or the browser Run once alternative.
-FALLBACK: After 45 seconds of setup trouble, use the identical browser lesson.
+20:00–23:00 | Scan. Open. Follow along.
+SHOW: Builder QR → optional funding QR → back to Build QR
+DO: At 20:00 show Build QR. Everyone opens build.html. At about 21:00, if funding is configured, open the 15-minute operator window and show Funding QR briefly. Return to Build QR. A window opened at 21:00 closes at 36:00. People can register in parallel; it does not block the lesson.
+SAY: Open this guide now and follow my first run. After minute 34 you will make your own change.
+LOOK FOR: Builder QR and funding QR have distinct labels. Neither scanning nor showing a QR opens intake.
+FALLBACK: Skip the funding detour if the allowance is not ready; everyone can do the read-only build.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-23:00–24:00 | Vote for the walkthrough.
-SHOW: Slide → show of hands
-DO: Take a 30-second vote between the two lessons. Lead with the winner; each builder can still follow the other card.
-SAY: Both paths end with an explainable decision and real Sui evidence.
-LOOK FOR: One choice, no external poll signup.
-FALLBACK: Default to Rebalancer if unclear.
+23:00–24:00 | We build this one together.
+SHOW: Deck → Run Rebalancer (default) or Run Guardian
+DO: Take a quick show of hands if needed. Click the chosen Run button to open the embedded walkthrough. Lead ONE recipe, not both. Participants can follow it or choose the other card. Leave the walkthrough open for the next ten minutes.
+SAY: Keep your guide open and click each step with me.
+LOOK FOR: The presenter is in the embedded demo; the room is on the same builder page.
+FALLBACK: Default to Rebalancer; use Guardian scenarios if live reads fail.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-24:00–27:00 | Run one decision loop.
-SHOW: Terminal → downloaded source → JSON output
-DO: Run only the chosen command. Rebalancer: identify price, checkpoint, simulated holdings, decision, proposed value. Guardian: identify healthFactor 1.1, target 1.3, proposedRepayUsd 10, targetRestoredWithinCap false. Show the few lines of rebalance() or guardian() in an editor.
-SAY: A proposal is a result we can inspect before granting action authority.
-LOOK FOR: Rebalancer reads mainnet. Guardian explicitly says SIMULATED. Neither signs.
-FALLBACK: Network failure: run Guardian locally; never label its scenario a live lending position.
+24:00–27:00 | Click Run. Inspect the result.
+SHOW: Embedded walkthrough step 1 → result
+DO: Click the baseline Run control. Read the summary, then expand the raw output if useful. Rebalancer: price, checkpoint, target and proposed change. Guardian: health factor, cap and whether it restores the target. No terminal typing.
+SAY: A proposal is something we can inspect before granting action authority.
+LOOK FOR: An actual browser execution result. No swap or repayment is claimed.
+FALLBACK: If the read fails, show the error and retry once or use Guardian.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-27:00–31:00 | Change the decision. Check why.
-SHOW: Terminal / browser → live Sui lab → explorer
-DO: Rebalancer: node workshop-agent.mjs rebalancer --target 0.7. Guardian: node workshop-agent.mjs guardian --scenario healthy then --scenario unknown. Open a real pool transaction in the lab; match status, balances and gas in Suiscan. The linked Guardian transaction is a prior demo, not today’s execution. A current swap/repay only substitutes after its own funded rehearsal.
-SAY: Changing the rule changes a proposal. The chain receipt separately proves what actually executed.
-LOOK FOR: Guardian unknown branch STOP_UNKNOWN_DATA; a cap can be insufficient. Match actual transaction type and digest.
-FALLBACK: If live data fails show an explicitly dated receipt or use the scenario; do not send a neighbour transfer as a substitute for a rebalance.
+27:00–31:00 | Change one rule. Compare.
+SHOW: Walkthrough change/compare → evidence
+DO: Use the next-step buttons to run the changed setting. Compare the saved baseline and new result. For Guardian, run the unknown-data case too. Then open the real Sui evidence link. Match the digest/status/balances/gas to the explorer; the historical Guardian receipt is a previous demo.
+SAY: The rule changes a proposal. A chain receipt proves a separate executed action.
+LOOK FOR: Both outputs remain visible for comparison. Unknown data stops Guardian.
+FALLBACK: Stay on the labelled scenario or previous receipt if the network fails; never fabricate a new transaction.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-31:00–34:00 | Save the result. Know the cost.
-SHOW: Terminal → guide Save browser output
-DO: Save output to a local file or use Save browser output. Explain the local loop has no paid inference, WaaP signing, AEX fee or gas. Full agents have separate runtime, fees and capital. Confirm the process has exited.
-SAY: A stopping point is part of the recipe.
-LOOK FOR: No running process and no claimed swap or repay from the lesson.
-FALLBACK: Do not log out or modify shared AEX sessions.
+31:00–34:00 | Save our example. End the run.
+SHOW: Walkthrough save step → back to slide 20
+DO: Click Save to download the comparison. Each run is one-shot. Explain that the optional coding-agent wrapper can have its normal model cost; this browser helper makes no model or signing call. Close the walkthrough and show Your turn.
+SAY: That was our shared example. Now you will make your own change.
+LOOK FOR: Saved evidence and a clear handoff to independent work.
+FALLBACK: If no successful result exists, save the error and next diagnostic step without calling it a success.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-34:00–35:00 | Your turn.
-SHOW: Builder QR → laptops / phones
-DO: Open build.html. Builders choose either card. Funding registration closes 15 minutes after its operator-controlled opening, not on page load. If opened at minute 20, close at 35; validate export separately before any payout.
-SAY: Everyone can build; up to 30 valid registrations receive the measured funding allowance.
-LOOK FOR: Working lesson for each participant or pair.
-FALLBACK: Use Guardian scenarios offline or Hunt for a non-chain research exercise.
+34:00–35:00 | Now make it yours.
+SHOW: Independent-build QR → participant screens
+DO: At 34:00 clearly say the guided demonstration is over. Show Build QR again for anyone who missed it. People may restart the walkthrough, switch recipe, or use advanced controls to make their own change. If funding opened at 21:00 it closes at 36:00; the operator handles export separately.
+SAY: You now have 17 minutes for your own experiment. Pick one change you can explain.
+LOOK FOR: Everyone knows this is independent work, not another presenter demo.
+FALLBACK: Pair up or use Guardian scenarios if connectivity is poor.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-35:00–46:00 | Build. Compare. Explain.
-SHOW: Selected lesson → source → output
-DO: Let the room work. Rebalancer edit target or band; Guardian edit target health factor or scenario. Keep all lessons in decision-only mode. Advanced builders follow the public Rebalancer guide in DRY_RUN=1 only after wallet/coin setup; the docs scaffold shortcut is not in the checked public registry. No Guardian full public download exists yet.
-SAY: Make one change you can explain.
-LOOK FOR: Output labels show live input versus simulated position.
-FALLBACK: Use browser lessons if Node is unavailable; do not open loans to create a demo position.
+35:00–46:00 | Your experiment. Your evidence.
+SHOW: Participant builder pages
+DO: Circulate rather than continue a second presentation. Builders can repeat the click-through or expand advanced controls. Optional local code/download is for people who want it; it is not required.
+SAY: Try one small change, compare the output, and prepare a short explanation.
+LOOK FOR: A chosen setting and an output the participant can explain.
+FALLBACK: Use the browser route or work in pairs. Full funded swaps/repayments are outside this lesson unless separately rehearsed.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
 46:00–51:00 | Get one result worth showing.
