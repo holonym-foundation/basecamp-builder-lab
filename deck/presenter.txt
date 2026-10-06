@@ -1,276 +1,223 @@
-Basecamp presenter companion · v4Rehearse togetherCLI stepsBefore startOpeningGuard stepsAEX stepsAudienceRecovery
-October 7 · 12:30–13:30 SGT · 60 minutes
+BASECAMP · REBALANCER + GUARDIAN
 
-Basecamp presenter companion.
+0:00–0:30 | Rebalance.
+Protect.
+CUE OPEN | 00:00–00:30 | SHOW: Slides
+DO: Start the timer. Introduce yourself and the promise: one useful result, one change, and evidence.
+SAY: Today we will go from an instruction to a result we can inspect. The slides are signposts; we will spend the build on screen.
+LOOK FOR: Laptop-first audience ready; browser lab also works on phones.
+FALLBACK: Use the browser Sui route unless the complete AEX path passed rehearsal. N shows notes in this same window; keep it off on the audience screen.
 
-V4 · Prepared October 6 · Presentation → live walkthrough → audience build
+Presenter companion: presenter.html. Notes stay off on the audience screen.
 
-CLI fallback at the AEX wizard. Create a wallet, inspect policy, send testnet SUI, verify and logout. Guard is the no-install alternative. The Studio coordinator owns AEX rehearsal and acceptance. AEX admission cap: 30.
-CLI quickstartCLI fallback deckConditional AEX deckPublished deckGuardHuntSuiscanRecipesPlain text
-Rehearse together on a phone hotspot
+0:30–2:00 | Personal agents are here.
+Spend 90 seconds on the examples. Muse, Instinct and Dots show why people want persistent personal agents. Describe the experience rather than making an unverified product comparison. Ask: who already delegates ongoing work to an agent? Then move on; do not launch three product demos.
 
-Report each result before marking it complete. Earlier lab evidence is not today’s hotspot rehearsal.
+Presenter companion: presenter.html. Notes stay off on the audience screen.
 
-1 · Fresh laptop journey
-
-Connect the laptop to a phone hotspot; open an inbox and new terminal. Run CLI steps 1 to 7 with a fresh email and isolated session: version → signup/approval → identity/policy → faucet → transfer → receipt → logout. Time the whole journey. About ten minutes is a target. Report elapsed time, any failed step and the public digest. Never share a password or session file.
-
-2 · Presenter mainnet transfer
-
-Pending. Identify a separate funded presenter wallet and intended receiving demo wallet first. Confirm mainnet, recipient and 0.001 SUI plus gas before sending once. Save digest and receipt screenshot for offline evidence. Do not use the coordinator’s AEX sessions. If funding or login is not ready, the testnet route remains available.
-
-3 · Physical phone check
-
-Open Guard on your phone, collect samples, Stop, change Range 200 to 400, Reset and Start. Open the correct-network receipt checker. Confirm readable controls. Desktop emulation does not complete this check.
-
-4 · Deck and AV backup
-
-Click all nine architecture drilldowns; Esc returns. Scan CLI QR on slides 15 and 20 with the phone camera and confirm cli.html opens. Keep notes off the audience display. Open the updated PPTX offline.
-
-5 · Organizer confirmation
-
-Confirm own-laptop presentation, live demo, HDMI or USB-C connection and wifi. Venue submission is not AV confirmation. Venue still has v1 unless the organizer confirms otherwise.
-
-Before the room opens
-Open slide ↗
-Choose the lane during rehearsal, not at the podium.
-
-Screen setup
-
-Open the local v4 deck, Guard, Hunt and Suiscan in separate tabs. Keep this companion on a second screen or phone. Increase browser zoom until labels are readable from the back. Use Do Not Disturb. N toggles deck notes in the SAME window; keep notes closed on the audience display.
-
-No-install alternative: Guard
-
-Guard is the working browser-first route. Its public-page run, 200→400 edit and real receipt check passed again on October 6. Recheck it on the venue network today: Start, three samples, Stop, edit 200 to 400, Reset, Start, then open a real pool transaction. No wallet or installation is needed. This is a live read with a simulated liquidity range; it does not deposit funds.
-
-AEX: conditional lane
-
-Use AEX only after one fresh participant has completed sign-in, invite admission, sponsored checkout/actual credit allocation, agent start, useful output, cost inspection and verified stop/release in the actual workshop environment. The new /workshop flow is source preparation and is not yet installed. Do not send the audience or its QR there yet. Have the exact rehearsed URL ready; do not substitute another environment.
-
-Admission
-
-AEX admission is capped at 30 people, one sponsored agent per participant. Attendance can be larger. Additional people use browser Guard and join the waitlist once its destination is active. An admitted seat does not prove a running agent or available compute. Start attendees in the launch batches demonstrated by rehearsal; do not ask all 30 to deploy at once.
-
-45-second recovery
-
-If a live step cannot proceed after 45 seconds, name the problem and switch to the next working screen. Preserve pending checkout/payment state. Never repeat an ambiguous payment or remove an agent merely to make its card disappear. A recording or saved log is labeled previous evidence.
-
-Keep the fixed Sui moment
-
-Participants use testnet transfers. The fixed Sui moment is sending a transaction and checking the receipt. The earlier lab test passed; today’s fresh-user/hotspot check remains pending. Presenter mainnet requires its own funded rehearsal. If a fresh send fails, use the prior testnet receipt or a real third-party pool receipt with explicit attribution.
-
-00:00–06:00 · Set up the problem
-Open slide ↗
-SHOW slides 1–6. Finish the architecture map by 06:00.
-
-Talk track
-
-“Muse, Instinct and Dots show the personal-agent experience people want. OpenClaw and Hermes make running and extending an agent something builders can do. But the runtime is only part of the job: where does it run, who pays, what can it access, and who can stop it?”
-
-Bridge to AEX
-
-“AEX brings those questions into one workflow: find resources, agree terms, fund an escrow, identify the agent and inspect its work. Identity and reputation need evidence. Sovereignty means retaining control and a meaningful choice of provider. The security plane governs actions outside the prompt.”
-
-Set the promise
-
-“We will change a recipe, inspect a real result and check evidence on Sui. The slides are signposts; most of this session happens in the browser.” Describe architecture as direction where it is not demonstrated. Do not claim every product named is integrated with AEX or that all compute settlement occurs on Sui.
-
-06:00–11:00 · Show the layers
-Open slide ↗
-SHOW slides 7–9, then briefly the selected browser.
-
-Explain
-
-Model: interprets the task. Runtime: executes tools and retains context. Services: compute, data and a wallet if the task needs one. Guard is a deterministic monitor, not a language model choosing trades.
-
-Show
-
-Browser lane: open Guard and point to the pool, range controls and log without starting a second run. AEX lane: point to the already-rehearsed agent and its result. Return to slides for discover → agree → escrow → run → settle and identity/reputation.
-
-Budget explanation
-
-Separate deployment/compute allowance, agent working capital and transaction gas. A SUI balance is not automatically an AEX credit balance. Show actual amounts only when the running environment returns them. Do not promise a free allowance that has not been activated.
-
-11:00–16:00 · Authority and evidence
-Open slide ↗
-SHOW slides 10–12, then the relevant controls.
-
-Talk track
-
-“A prompt describes a job. Access to a service and permission to move money are separate decisions. We will ask what was allowed, inspect what happened, then stop the process.”
-
-Browser proof
-
-Point to Guard’s “Simulated position · no liquidity deposited” and “On-chain activity on this pool · live from Sui mainnet.” The range is our simulation; listed transactions belong to other people and bots.
-
-AEX proof
-
-Show only the recipe permissions actually present in the rehearsed flow. For Airdrop Scout, research/report output is the job; a report is not a signed transaction. Do not use an unproven daily-limit, auto-top-up or transaction-approval selector as evidence of enforcement.
-
-16:00–20:00 · Show a finished result
-Open slide ↗
-SHOW slides 13–14 → browser. Pick ONE tour.
-
-Browser tour
-
-Open Guard. Point to Pool tick, Samples, the solid simulated band and the dashed real-position outline if one has loaded. Scroll to live pool activity. A dashed outline is a position opened by someone else, not our deposited capital. Avoid quoting a fixed tick or price; live values change.
-
-AEX tour, if ready
-
-Open the rehearsed Dashboard and selected Scout. Show its actual useful brief and its save/activity status. Identify the owner and recipe. Do not call a draft card or generic chat response a deployed tenant. The exact installed route to its run-cost receipt and release control must already have been written down in rehearsal.
-
-Vote in the room
-
-Ask for a show of hands: “After the guided build: Guard, a testnet transfer, or Hunt research?” The Sui transaction inspection stays fixed whichever wins. Offer only routes that passed rehearsal. No StrawPoll dependency; replace with a polling QR only after a clean host account and destination are ready.
-
-20:00–34:00 · CLI fallback at the wizard
-
-Open slide 15 (#s14) for the CLI QR. This is the fallback when the AEX wizard is unavailable. Keep the 60-minute agenda.
-
-20:00–23:00 · Slide 15 → quickstart → terminal
-
-Open cli.html. Follow steps 1 to 3 with Node 24 and pinned CLI 2.2.1. Use a new terminal and fresh isolated session folder. Check version, sign up with a new email, approve the email privately, then run whoami and policy get. Keep passwords, inbox and existing history off the projector. Read the actual policy. If signup is pending at 23:00, continue during the build. Full setup targets about ten minutes; three minutes is not promised.
-
-alias waap="npx -y @human.tech/waap-cli@2.2.1"
-export WAAP_CLI_SESSION_DIR="$(mktemp -d /tmp/basecamp-rehearsal.XXXXXX)"
-waap --version
-
-Keep this terminal tab open; it holds the isolated session path. This creates an agent wallet, not an AEX deployment. Do not use any shared AEX buyer/seller session.
-
-23:00–24:00 · Slide 16 → vote
-
-Take hands for Guard, Trade or Hunt as the open-build extension. Trade means testnet transfers, not a swap. The fixed Sui transaction moment stays. Use Guard if unclear or most participants have no working CLI.
-
-24:00–27:00 · Slide 17 → browser faucet → terminal
-
-Quickstart step 4: open faucet.sui.io, choose Testnet, paste your own Sui address and complete the browser challenge. Run waap wallet-balance --chain sui:testnet. Wait for a positive balance. If throttled, pair with a funded participant or use Guard. While waiting, open Guard on a phone: Start → three samples → Stop → Range 200 to 400 → Reset → Start. Threshold 5 still needs pool movement; it cannot force a rebalance.
-
-27:00–31:00 · Slide 18 → send → checker → Suiscan
-
-Quickstart steps 5 and 6. Confirm a neighbor’s intended Sui address. Replace the example recipient; do not execute the angle-bracket placeholder literally. Send 0.001 SUI once using --chain sui:testnet --wait --json. Paste txHash into the quickstart checker, which selects testnet. Compare status, network, recipient, balance changes and gas with Suiscan. Check an existing digest before retrying an ambiguous send. Presenter mainnet uses a separate demo wallet and sui:mainnet only after its own funded rehearsal passes. Its checker omits net=testnet. Never use coordinator-owned AEX wallets.
-
-31:00–34:00 · Slide 19 → verify → logout
-
-Save the digest. Run waap logout in the isolated workshop session; confirm remote revocation. Participants continuing Trade can log in privately again. Logout does not release hosted compute. Guard: Stop sampling when finished; the separate activity feed can continue. If AEX was used, its actual cost and stop/release still require the coordinator-approved path.
-
-Verified receipt fallback
-
-Earlier testnet lab transfer. Label this as the previous lab run, not a fresh send today. The mainnet pool receipt is a third-party transaction. Neither proves a new mainnet presenter transfer.
-
-No-install recovery: Guard
-Open slide ↗
-Use this browser sequence if CLI setup cannot proceed. Slides 15 to 19 now show the CLI path; explain the switch and keep Guard visible.
-
-20:00–23:00 · Run the baseline
-
-Open https://holonym-foundation.github.io/basecamp-builder-lab/ . Range (± ticks)=200; Rebalance threshold (ticks)=100; leave Check every at its rehearsed default. Click Start. Wait for three Samples. Point to Pool tick and SIMULATED RANGE in the Agent log. Say: “These are live reads. This range is simulated. No liquidity was deposited.”
-
-23:00–24:00 · Vote
-
-Use slide 16 and show of hands, Guard, Trade (testnet) or Hunt. Decide in 45 seconds. The vote chooses the later audience extension; everyone follows the same range edit and Sui evidence step now. If the vote is unclear, use Guard.
-
-24:00–27:00 · Make the change
-
-Click Stop first: the range input is disabled while monitoring. Change Range (± ticks) from 200 to 400. Click Reset, then Start. Compare the new lower/upper tick bounds with the baseline. Bounds snap to the pool tick spacing, so do not promise an exact 2× width. Ask one attendee to explain which setting changed.
-
-27:00–31:00 · Fixed Sui transaction
-
-Scroll to “On-chain activity on this pool · live from Sui mainnet.” Choose a substantive row such as Add liquidity, Remove liquidity or Swap when available. Click that row’s Suiscan link. Copy the real transaction digest from the transaction page or its /tx/ URL. Return to Guard; paste it into “Transaction digest” under “Check a transaction”; click Check. Inspect Status, Time, Checkpoint, Sender, Gas and Balance change. Click “Open on Suiscan” to compare the same digest. This is someone else’s transaction; Guard observed it and did not send it.
-
-Receipt fallback
-
-October 6 rehearsal receipt: Open the October 6 rehearsal receipt . Digest: Fvdxzog5tBYp3D4gg85PJxd6j4embkbcKyMKowhYnFV8; checkpoint 330723636. This is a real third-party liquidity transaction, not ours. Label its capture date if using it instead of the latest activity. If no receipt can be displayed, show the pool object read and explicitly say no transaction was demonstrated.
-
-31:00–34:00 · Verify and stop
-
-Ask one attendee what the receipt proves. Distinguish the real pool transaction from our simulated position. Click Stop in Guard and verify that Samples no longer increases. The separate activity feed still polls; Stop does not stop every background read. Say: “The output is a claim; the receipt lets us check it.” No compute bill or wallet payment was created by this browser monitor.
-
-Conditional AEX route
-
-The Studio coordinator owns AEX rehearsal, credentials and acceptance.
-
-16:00–20:00 · Prepared AEX tour
-
-Use the coordinator-confirmed environment to show one useful agent result, its actual cost and stop/release controls. A draft card or generic answer does not prove a running agent.
-
-20:00 · Wizard or CLI fallback
-
-If the coordinator supplies a rehearsed wizard path that fits the guided block, follow its exact steps. Keep the fixed Sui moment, actual cost and verified stop/release. After 45 seconds of a blocked step, preserve its state and switch to the CLI QR on slide 15. Do not log into, reset or alter the coordinator’s buyer/seller sessions. CLI logout is not an AEX stop action.
-
-Admission
-
-AEX remains capped at 30 admitted users. Everyone else can use CLI or Guard and the waitlist when active. Admission is separate from concurrent runtime capacity.
-
-34:00–51:00 · Let the room build
-Open slide ↗
-SHOW slides 20–22, then leave the relevant tool visible.
-
-34:00–36:00 · Split once
-
-Everyone can use Guard in a browser. If the AEX lane is installed and accepted, admit at most 30 and launch in the rehearsed batches. Other participants stay on Guard or work in pairs; offer the waitlist when active. Phones work for the browser lab; a laptop is easier for comparing tabs. Do not provision new cloud workspaces or install dependencies in this block.
-
-36:00–46:00 · Guard exercise
-
-Click Stop. Try Range=300 or 400, or Rebalance threshold=5. Click Reset, then Start. Watch for “would rebalance” only if the pool moves enough; lowering the threshold does not force market movement. Click Copy log and save it in a local note. Success: one changed setting, a real sampled tick/checkpoint, and an explanation of the simulation.
-
-36:00–46:00 · Hunt exercise
-
-Open https://holonym-foundation.github.io/basecamp-builder-lab/hunt.html . Click Copy prompt. Paste into the already-working chat agent with browsing. Ask for three official resources, then open the links and verify titles/content. If browsing fails, read the supplied official-source cards and label the answer as based on those sources. Hunt needs no wallet or chain transaction. Do not promise that every chat agent can browse.
-
-36:00–46:00 · Trade exercise
-
-Use quickstart steps 4 to 7 on testnet: fund, confirm a neighbor address, send once, verify, save the digest and logout. Log in privately again if you ended the guided session. sign-tx is optional depth only after separate rehearsal; a signature alone is not a broadcast. Phone-only participants use Guard.
-
-AEX participants
-
-Use the accepted Scout path only. Change the research question, request one result, inspect the run cost, then stop. A wallet grant, compute credits and an agent’s operating capital are separate; do not swap or fund from the podium to repair an untested path.
-
-46:00–51:00 · Save and choose two shares
-
-Guard: click Stop, then Copy log; note the changed range and transaction link. Hunt: save prompt, result and checked sources. AEX: save the useful result and cost evidence; verify stop/release rather than deleting a card. Ask two volunteers for a 45-second explanation: change, result, evidence. No keys, passwords or private invitation codes in shared artifacts.
-
-51:00–57:00 · Share evidence
-Open slide ↗
-SHOW slides 23–24, with two short participant browser shares.
-
-Ask
-
-“What did you change? What result did you get? What evidence would let someone else check it?” A failed attempt can show its error and next diagnostic step without being called a successful deployment.
-
-Resource handoff
-
-Share the public Guard and Hunt pages and the WaaP recipe library. State the actual hosted-access expiry only if active and known. No indefinite-hosting promise. An AEX draft is not a published marketplace listing; demonstrate publishing only if that exact route passed rehearsal.
-
-57:00–60:00 · Close and stop
-Open slide ↗
-SHOW slide 25. No new deployment. CLI participants save the digest and run waap logout in their isolated session.
-
-Talk track
-
-“Agents need resources, authority and evidence. You changed a recipe, inspected a result and checked a real Sui record. Keep the question small enough that you can explain what the agent did.”
-
-Finish
-
-Take one or two questions. Stop Guard and any presenter monitoring process. Verify the demonstrated AEX agent is stopped and its release outcome is recorded if that lane was used. Save the actual receipt. End on time.
-
-Recovery card
-Open slide ↗
-Spend no more than 45 seconds recovering a live step.
-
-AEX access or checkout fails
-
-Keep the existing request/receipt. Move to browser Guard; do not pay again or share a company login. A code is admission, not proof that the backend is ready.
-
-Guard or explorer network fails
-
-Use the saved Guard baseline/edited logs from rehearsal, clearly labeled previous live reads. If an actual captured receipt exists, show that with its date. Otherwise use Hunt’s source cards and a recipe-writing exercise. Do not fabricate a digest or call offline output live.
-
-Hunt model or browsing fails
-
-Read the official-source cards already open in the Hunt page. Ask attendees to write the task, inputs, permissions and a verifiable result. A non-chain backup stays useful without pretending inference worked.
-
-A transfer times out
-
-Preserve the operation/digest. Check its existing outcome; never resend as a blind retry. Continue the pool-transaction evidence path.
-
-Prior testnet proof does not complete today’s hotspot checklist. AEX rehearsal state belongs to the Studio coordinator. No venue resubmission from this update.
+2:00–3:15 | You can run the agent yourself.
+Spend 75 seconds on OpenClaw and Hermes. The next step is running and extending the agent yourself. Ask what has to exist beyond the model: a runtime, tools, an owner and a budget. Introduce AEX as the place these responsibilities meet.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+3:15–4:30 | Who owns the work?
+Bridge to AEX. The question is not only which model is smartest. A working agent needs a place to run, authority to act, a budget and evidence of what happened. Ask the audience which of these has stopped them from running an agent beyond a demo. These are design questions, not unsupported competitor comparisons.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+4:30–5:15 | AEX: a market agents can use.
+Present this explicitly as the AEX architecture and direction, not a claim that every layer is available today. On-chain market records and escrow make the commercial terms inspectable. Identity attributes authority; reputation should be grounded in work receipts. Sovereignty means meaningful choice of runtime/provider and the ability to withdraw access. The security plane mediates actions outside the model prompt. Today is a limited demonstration of the demonstrated path. Do not say all compute settlement occurs on Sui; the Sui workload and compute settlement are distinct.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+5:15–6:00 | The parts of AEX.
+Use the last 45 seconds of the opening for this map. Group the parts into runtime, authority and market. Point to one route through the map; save drill-downs for questions. This adds no time to the six-minute opening. In PPTX, use the Market, Wallet or Escrow reference buttons; return with the button on the reference slide. The complete operational sequence resumes at slide 7. This map describes the architecture; it is not proof that every component is available in the workshop environment.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+6:00–8:00 | What actually runs an agent?
+CUE LAYERS | 06:00–08:00 | SHOW: Slides → browser Guard → slides
+DO: Point at model, runtime and services. Briefly open Guard to show an input, a running loop and output; return to the slides. The monitor is deterministic code; an AI agent can help build or operate it.
+SAY: A model chooses a next step. A runtime executes tools. Services supply data and compute.
+LOOK FOR: Audience can distinguish a monitor from a language-model agent.
+FALLBACK: Stay on the architecture slide if the browser takes more than 45 seconds.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+8:00–9:30 | A lease makes the terms explicit.
+Explain the intended market sequence in plain language. A buyer and provider agree on a resource and its price; escrow holds funds under the settlement terms. Receipts make settlement inspectable. Refund and dispute behavior depends on the actual contract and conditions; do not promise an unconditional refund, automatic quality judgment, or that escrow makes a malicious provider safe. Use the chain shown by the actual environment in a demo, without implying compute settlement is the Sui recipe transaction.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+9:30–11:00 | Make identity and reputation portable.
+Frame identity and reputation as requirements of an open market. A memorable agent name is not an ownership proof; a self-reported success is not a work receipt. Sovereignty includes choosing where the agent runs and retaining the ability to stop or migrate it. Do not imply an operational reputation registry, transferable score or fully portable agent identity has been demonstrated in this workshop.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+11:00–13:00 | Keep authority outside the prompt.
+CUE AUTHORITY | 11:00–16:00 | SHOW: Slides → editor
+DO: Explain TAP service authority versus WaaP transaction authorization. Show the supplied .env.workshop: mainnet, monitor, DRY_RUN=true, pool and range. Open agent.ts and show that active submission is a separate path. Return to slide 11. Do not open session files or credential pages.
+SAY: A prompt describes a job. These settings choose this recipe’s behavior. Actual wallet authorization is a separate check, which we will show when we send a transaction.
+LOOK FOR: Visible read-only intent in the supplied recipe; no private key in the displayed config.
+AUDIENCE: Identify which part reads and which part could write.
+FALLBACK: Do not advertise the current AEX daily-limit selector as proven wallet enforcement; the observed public UI itself describes some settings as recorded/future enforcement.
+
+Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+13:00–14:30 | Separate the four budgets.
+SHOW: Slides
+DO: Explain AEX fees, WaaP fees, gas and position capital as separate allocations. No amount is approved yet. Local workshop loops incur none of the hosted/signing fees.
+SAY: Fund the job we actually run.
+LOOK FOR: No suggestion that a lesson or a code is a funded position.
+FALLBACK: If the funded recipe is not rehearsed, keep the room on the decision loops.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+14:30–16:00 | Read. Propose. Approve. Verify.
+Use this loop throughout the practical. Approval is meaningful only when the person understands the exact network, asset, destination, amount and fees. After submission, verify the outcome independently. If an outcome is pending or unknown, inspect it before retrying. A generated sentence saying success is not a receipt.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+16:00–18:00 | Two Sui jobs to build.
+SHOW: Slide → builder guide
+DO: Introduce the two choices. Rebalancer uses live Sui price + sample holdings. Guardian lesson uses labelled scenarios. Open All starter sources to show seven public skills, one public scaffolded activity, hosted starters and the wider docs library.
+SAY: Choose the problem you want your agent to solve.
+LOOK FOR: The full Guardian is not in the checked public repo. These are workshop loops, not the full AEX deployments.
+FALLBACK: Browser lessons need no wallet.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+18:00–20:00 | Tour the agent, then its decision.
+SHOW: build.html → chosen card → source file
+DO: Open build.html. Click Rebalancer, then Guardian. Show download, command, change, output and source links. If the complete AEX flow passed coordinator rehearsal, optionally show its catalogue → starter detail → configure → launch → output → cost → stop; otherwise stay on this local tour.
+SAY: The same job can be packaged in a runtime later. Today we can inspect the decision directly.
+LOOK FOR: Participants know where to run and where to read output.
+FALLBACK: Do not spend this block repairing AEX.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+20:00–23:00 | Choose your build.
+SHOW: QR → build.html → terminal
+DO: Scan the guide QR. Download workshop-agent.mjs. Open a terminal in its folder. Run node --version (Node 24), then node workshop-agent.mjs rebalancer OR node workshop-agent.mjs guardian --scenario at-risk. No npm install. Open funding registration now only when a real form and approved amount/network are ready; it closes 15 minutes later. Funding QR is separate.
+SAY: Each person chooses one build. You can finish it without AEX or a funded wallet.
+LOOK FOR: JSON output or the browser Run once alternative.
+FALLBACK: After 45 seconds of setup trouble, use the identical browser lesson.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+23:00–24:00 | Vote for the walkthrough.
+SHOW: Slide → show of hands
+DO: Take a 30-second vote between the two lessons. Lead with the winner; each builder can still follow the other card.
+SAY: Both paths end with an explainable decision and real Sui evidence.
+LOOK FOR: One choice, no external poll signup.
+FALLBACK: Default to Rebalancer if unclear.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+24:00–27:00 | Run one decision loop.
+SHOW: Terminal → downloaded source → JSON output
+DO: Run only the chosen command. Rebalancer: identify price, checkpoint, simulated holdings, decision, proposed value. Guardian: identify healthFactor 1.1, target 1.3, proposedRepayUsd 10, targetRestoredWithinCap false. Show the few lines of rebalance() or guardian() in an editor.
+SAY: A proposal is a result we can inspect before granting action authority.
+LOOK FOR: Rebalancer reads mainnet. Guardian explicitly says SIMULATED. Neither signs.
+FALLBACK: Network failure: run Guardian locally; never label its scenario a live lending position.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+27:00–31:00 | Change the decision. Check why.
+SHOW: Terminal / browser → live Sui lab → explorer
+DO: Rebalancer: node workshop-agent.mjs rebalancer --target 0.7. Guardian: node workshop-agent.mjs guardian --scenario healthy then --scenario unknown. Open a real pool transaction in the lab; match status, balances and gas in Suiscan. The linked Guardian transaction is a prior demo, not today’s execution. A current swap/repay only substitutes after its own funded rehearsal.
+SAY: Changing the rule changes a proposal. The chain receipt separately proves what actually executed.
+LOOK FOR: Guardian unknown branch STOP_UNKNOWN_DATA; a cap can be insufficient. Match actual transaction type and digest.
+FALLBACK: If live data fails show an explicitly dated receipt or use the scenario; do not send a neighbour transfer as a substitute for a rebalance.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+31:00–34:00 | Save the result. Know the cost.
+SHOW: Terminal → guide Save browser output
+DO: Save output to a local file or use Save browser output. Explain the local loop has no paid inference, WaaP signing, AEX fee or gas. Full agents have separate runtime, fees and capital. Confirm the process has exited.
+SAY: A stopping point is part of the recipe.
+LOOK FOR: No running process and no claimed swap or repay from the lesson.
+FALLBACK: Do not log out or modify shared AEX sessions.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+34:00–35:00 | Your turn.
+SHOW: Builder QR → laptops / phones
+DO: Open build.html. Builders choose either card. Funding registration closes 15 minutes after its operator-controlled opening, not on page load. If opened at minute 20, close at 35; validate export separately before any payout.
+SAY: Everyone can build; up to 30 valid registrations receive the measured funding allowance.
+LOOK FOR: Working lesson for each participant or pair.
+FALLBACK: Use Guardian scenarios offline or Hunt for a non-chain research exercise.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+35:00–46:00 | Build. Compare. Explain.
+SHOW: Selected lesson → source → output
+DO: Let the room work. Rebalancer edit target or band; Guardian edit target health factor or scenario. Keep all lessons in decision-only mode. Advanced builders follow the public Rebalancer guide in DRY_RUN=1 only after wallet/coin setup; the docs scaffold shortcut is not in the checked public registry. No Guardian full public download exists yet.
+SAY: Make one change you can explain.
+LOOK FOR: Output labels show live input versus simulated position.
+FALLBACK: Use browser lessons if Node is unavailable; do not open loans to create a demo position.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+46:00–51:00 | Get one result worth showing.
+CUE SAVE | 46:00–51:00 | SHOW: Participant result
+DO: Stop the monitor/agent. Save your settings, prompt, useful output and real receipt URL if any. Pick two volunteers for 30–45 seconds each.
+SAY: Show what you changed and how you know it worked.
+LOOK FOR: No credentials or invite codes in shared screenshots.
+FALLBACK: If no fresh result exists, label a replay or show an error and the diagnostic step.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+51:00–56:00 | Share a recipe someone can repeat.
+CUE SHARE | 51:00–57:00 | SHOW: Participant screen / AEX listing if rehearsed → resource slide
+DO: Take two short participant demonstrations. AEX: show the actual listing/fork action only if this deployed instance supports it; opening a draft is not publication. Other routes: share workshop-recipe.env and observe.mjs through the selected event channel. Display the official recipe-library QR last.
+SAY: You have a recipe you can repeat. Continuing hosted access depends on the time window we actually provide.
+LOOK FOR: The audience leaves with a source/config and a demonstrated result.
+AUDIENCE: Share code/config without credentials, plus a real receipt or source link where applicable.
+FALLBACK: No verified publication endpoint is assumed. Save files locally if a shared channel is unavailable.
+
+Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+56:00–57:00 | Keep building after today.
+SHOW: build.html#library
+DO: Link the actual sources. Full Guardian publication is a remaining gap, not a shipped starter. Hosted AEX has six starter names; public skills and docs cover a different set.
+SAY: Keep your code, output and next experiment.
+LOOK FOR: No blanket claim that every hosted agent is a public standalone download.
+FALLBACK: Local lesson remains usable independently.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+57:00–60:00 | What will your agent do next?
+CUE CLOSE | 57:00–60:00 | SHOW: Closing slide
+DO: Answer one or two questions and end on time. Stop presenter monitoring processes.
+SAY: Agents need resources, authority and evidence. Today you changed a recipe and checked its output.
+LOOK FOR: A clear finish, with source files saved.
+AUDIENCE: Save your work.
+FALLBACK: Use remaining time for recovery; do not start a new deployment.
+
+Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
+CLI close: save the digest and run waap logout in the isolated workshop session. Confirm revocation. Do not confuse logout with stopping an AEX agent.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+APPENDIX A · non-chain fallback | A. No wallet? Run a research scout.
+This is the genuine non-chain fallback: it needs a running model and web/source access, not a wallet, RPC or funds. Use the hosted agent already available. If browsing is unavailable but inference works, supply prepared source extracts and label the result as based on those extracts. If the network is entirely unavailable, use appendix C. Verify every link and do not invent opportunities. The prompt is complete and can be pasted into an existing agent; its tools still need rehearsal.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+APPENDIX B · participant recovery | B. If a participant gets stuck.
+SHOW: Builder guide → chosen lesson
+DO: Use the browser route or pair up. Funding and AEX admission are separate from access to the public exercises. Only share the actual live registration/waitlist form.
+SAY: You can complete the lesson while funding is processed.
+LOOK FOR: No credentials or private codes projected.
+FALLBACK: Hunt is the non-chain fallback.
+Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
+
+APPENDIX C · offline recovery | C. If the venue connection drops.
+Use the saved monitor logs, clearly labeled captured evidence. No funded presenter transfer or complete AEX recording is presumed to exist. An offline discussion can explain the code and receipts, but does not become a fresh live result. Keep the lesson moving and record the failed step for after the session.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+APPENDIX D · references | Sources and further reading
+Primary sources verified on October 4, 2026. Detailed URLs are in each relevant slide’s notes. AEX market, identity and reputation slides describe architecture and design goals, not a blanket claim of shipped functionality. No adoption counts, valuation comparisons or yield guarantees are used.
+
+Presenter companion: presenter.html. Notes stay off on the audience screen.
+
+APPENDIX E · command card | The command card.
+Download workshop-agent.mjs from build.html. Open terminal in the download folder. Commands are decision-only. No wallet sessions, keys or AEX deployment. For the full recipe use the public guide and its own prerequisites.
+
+APPENDIX F · screen map | Screens to keep open.
+Keep presenter notes private: N opens notes in the audience deck itself. Download workshop-agent.mjs ahead of time. Pre-open build.html, live pool lab and explorer. AEX remains optional after coordinator acceptance. Keep signup/email/private codes/session files off screen.
