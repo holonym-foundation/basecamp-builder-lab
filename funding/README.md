@@ -1,30 +1,42 @@
 # Workshop funding: 15-minute form → private CSV → local payouts
 
-This fallback does not require AEX. It collects **individual workshop codes and Sui addresses** in a Google Form, selects at most **30 valid unique registrations**, and uses the operator's WaaP CLI to send a measured allowance. Everyone else is waitlisted. No allowance is built into this kit.
+This fallback does not require AEX. It collects **individual workshop codes and Sui addresses** in a hosted registration form, selects at most **30 valid unique registrations**, and uses the operator's WaaP CLI to send a measured allowance. Everyone else is waitlisted. No allowance is built into this kit.
 
-The public QR opens the form, not a wallet, payment request or claim link. The form always says submission received, not funds sent or place guaranteed. Individual invite codes are distributed privately, one per person. Duplicate codes/addresses cannot get another allocation. This does not identify humans: someone with multiple legitimately issued codes and wallets could submit multiple times; staff controls code issuance.
+The participant QR opens the form, not a wallet, payment request or claim link. The form always says submission received, not funds sent or place guaranteed. Individual invite codes are distributed privately, one per person. Duplicate codes/addresses cannot get another allocation. This does not identify humans: someone with multiple legitimately issued codes and wallets could submit multiple times; staff controls code issuance.
 
-## 1. Prepare the private form
+## 1. Prepare the hosted registration form
 
-In your Google account, create a project at https://script.google.com, paste `Form.gs`, and run `setupFundingForm`. Approve the Google Forms/Drive permissions. It creates a **closed** form and a private Drive folder containing 60 individual codes. Do not share that folder, the code list or response exports publicly. Use the logged participant URL to generate the QR (never the form edit URL). Test respondent access signed out; your Workspace administrator may restrict external forms.
+Use the [workshop registration page](https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site). The [operator page](https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site/operator) requires the private operator key supplied to the workshop owner. Keep this key out of links, screenshots, the deck and public files. The browser holds it only in page memory. Site audience access and this operator key are separate controls; signed-out attendee access must be verified before showing the QR.
 
-The setup runs once. If setup fails halfway, preserve its existing form/folder IDs and repair the setup; do not clear properties and unknowingly create another active campaign.
+1. Open the operator page, enter the key and select **Load private controls**. Leave **Separate rehearsal campaign** unchecked for the actual workshop.
+2. Select **Prepare 60 private codes** once. Download `codes.csv` and issue one code privately to each attendee. Preparing does not open registration. Repeating preparation cannot replace the existing campaign or codes.
+3. Confirm the wallet network and measured funding allowance with the host. The real campaign collects Sui mainnet addresses; the isolated rehearsal campaign uses testnet. No amount is supplied by this form, and it cannot send funds.
+4. When the room is ready, show the participant QR and select **Open 15-minute registration**. Opening is operator-controlled and cannot be repeated. The server stores the opening/cutoff times and enforces the exact cutoff on every submission.
+5. After the cutoff, select **Load private controls** again. Download `campaign.json` and `responses.csv`, keeping the original `codes.csv` alongside them in a private folder. **Close registration early** permanently stops further intake; it preserves the original 15-minute cutoff, and payout planning still waits until that time.
 
-Make a QR locally (no form responses are sent to a third-party QR service):
+The backend atomically reserves the first 30 valid unique code/address registrations for funding review; further eligible submissions join the waitlist. Reusing the same code and address returns the original receipt. A code cannot register another address, and an address cannot reserve a second place. No submission means funds have been sent. The amount remains a separate operator decision.
+
+For rehearsal, use the operator's **Separate rehearsal campaign** checkbox and the participant URL with `?rehearsal=1`. Rehearsal codes, addresses and exports are isolated from the actual workshop. Never open the real campaign to test the form. Each campaign opens only once.
+
+Generate the participant QR locally:
 
 ```sh
 python3 -m venv /tmp/basecamp-qr-env
 /tmp/basecamp-qr-env/bin/pip install 'qrcode[pil]==8.2'
-/tmp/basecamp-qr-env/bin/python funding/qr.py --url 'YOUR_PUBLISHED_FORM_URL' --out /tmp/registration-qr.png
+/tmp/basecamp-qr-env/bin/python funding/qr.py \
+  --url 'https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site' \
+  --out /tmp/registration-qr.png
 ```
 
-Show the QR and run `openFundingWindow` in Apps Script when ready. The window is **15 minutes**, cannot be reopened by rerunning the function, and the cutoff is saved in `campaign.json`. The closing trigger can be delayed by Google: **the payout planner enforces the exact cutoff**, regardless of when the form visually closes. Form submissions remain requests; the planner selects the first 30 eligible unique responses by server timestamp (response ID breaks exact ties). Entries beyond 30 become a private waitlist.
+Use `.svg` as the output extension for a vector QR. Never encode the operator URL or key. A QR does not change site permissions or open registration.
 
-This is not AEX's server-enforced account admission. It is a capped payout selection after a form closes; it never promises a seat before validation.
+### Optional Google Forms alternative
+
+`Form.gs` remains a separate Google-account alternative. Do not create a second campaign if using the hosted form. In a private Apps Script project, run `setupFundingForm`, privately retain its codes, and use its published respondent URL. Run `openFundingWindow` only when showing that alternative's QR; after cutoff, run `exportFundingResponses`. Use that campaign's own codes, CSV and configuration together. Google's closing trigger may run late; the local planner enforces the exact saved cutoff. Use the helper's ISO-timestamp CSV, not Google's locale-dependent default export. Google-account setup and external respondent access require their own rehearsal.
 
 ## 2. Export and review
 
-After the window ends, run `exportFundingResponses`. Download its CSV, `codes.csv` and `campaign.json` into a private local folder. Use this helper's CSV, not Google's locale-dependent default export. Do not edit timestamps, IDs or the window after collection. An existing plan remains bound to its campaign in the ledger.
+After the window ends, download the hosted operator page's `responses.csv`, `codes.csv` and `campaign.json` into a private local folder. Use the three files from the same campaign; never mix the hosted and Google Forms alternatives. Do not edit timestamps, IDs or the window after collection. An existing plan remains bound to its campaign in the ledger.
 
 Choose the amount only after a complete recipe action is measured. For local agents there is no AEX deployment fee. Reserve enough sender SUI for network costs in addition to the recipient total. The reserve is a balance floor, **not a hard maximum transaction gas fee**.
 
@@ -77,4 +89,4 @@ cd funding
 python3 -m unittest -v
 ```
 
-Tests use injected wallet/RPC functions with **no funds or real sessions**. They exercise duplicate/late inputs, exact amounts/caps, persistent interrupted dispatch, confirmed restart, plan binding and receipt mismatch. A Google-account form setup, signed-out submission, actual export, live RPC check and one separately approved real transfer remain operator rehearsal steps. Source tests do not establish those live results.
+Tests use injected wallet/RPC functions with **no funds or real sessions**. They exercise duplicate/late inputs, exact amounts/caps, persistent interrupted dispatch, confirmed restart, plan binding and receipt mismatch. The hosted form has a separate backend test suite and isolated rehearsal campaign. Signed-out attendee access, the measured allowance, live RPC availability and one separately approved real transfer remain operational checks. Source tests and registration receipts do not establish a successful payout.
