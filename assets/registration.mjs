@@ -23,8 +23,11 @@ function render() {
   if (status?.network) $('network').textContent = `Use your agent wallet’s Sui ${status.network} address. No password or recovery phrase.`;
 }
 async function request(path, options = {}) {
-  const response = await fetch(API + path + query, {credentials: 'omit', cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(15000), ...options});
-  const data = await response.json();
+  let response, data;
+  try { response = await fetch(API + path + query, {credentials: 'omit', cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(15000), ...options}); }
+  catch { throw Error('Connection interrupted. Retry with the same code and address.'); }
+  try { data = await response.json(); }
+  catch { throw Error('Registration service unavailable. Retry with the same code and address.'); }
   if (!response.ok) throw Error(data.error || 'Could not save. Retry with the same code and address.');
   return data;
 }
