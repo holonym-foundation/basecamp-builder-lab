@@ -1,0 +1,8 @@
+private/
+__pycache__/
+*.sqlite*
+*.csv
+campaign.json
+plan.json
+receipts.json
+registration-qr.png
