@@ -6,7 +6,7 @@ The participant QR opens the form, not a wallet, payment request or claim link. 
 
 ## 1. Prepare the hosted registration form
 
-Use the [workshop registration page](https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site). The [operator page](https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site/operator) requires the private operator key supplied to the workshop owner. Keep this key out of links, screenshots, the deck and public files. The browser holds it only in page memory. Site audience access and this operator key are separate controls; signed-out attendee access must be verified before showing the QR.
+Use the [workshop registration page](https://holonym-foundation.github.io/basecamp-builder-lab/register.html). The [operator page](https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site/operator) requires the private operator key supplied to the workshop owner. Keep this key out of links, screenshots, the deck and public files. The browser holds it only in page memory. Site audience access and this operator key are separate controls; signed-out attendee access must be verified before showing the QR.
 
 1. Open the operator page, enter the key and select **Load private controls**. Leave **Separate rehearsal campaign** unchecked for the actual workshop.
 2. Select **Prepare 60 private codes** once. Download `codes.csv` and issue one code privately to each attendee. Preparing does not open registration. Repeating preparation cannot replace the existing campaign or codes.
@@ -24,7 +24,7 @@ Generate the participant QR locally:
 python3 -m venv /tmp/basecamp-qr-env
 /tmp/basecamp-qr-env/bin/pip install 'qrcode[pil]==8.2'
 /tmp/basecamp-qr-env/bin/python funding/qr.py \
-  --url 'https://sui-basecamp-funding.j94fv2pvjn.chatgpt.site' \
+  --url 'https://holonym-foundation.github.io/basecamp-builder-lab/register.html' \
   --out /tmp/registration-qr.png
 ```
 
