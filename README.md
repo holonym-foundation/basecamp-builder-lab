@@ -17,3 +17,7 @@ URL presets: `?range=400&autostart=1` starts with the edit applied; `?threshold=
 ## Hunt card
 
 `hunt.html` is the non-chain workshop exercise: one research prompt for any chat agent with browsing, plus steps to check every link it returns.
+
+## Agent wallet quickstart
+
+`cli.html` walks a builder through the WaaP CLI on Sui testnet: create an agent wallet, check its policy, fund it from the faucet, send a transaction and verify it on chain. Every step was tested with waap-cli 2.2.1.
