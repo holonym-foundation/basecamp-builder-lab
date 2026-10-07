@@ -1,223 +1,71 @@
-TRADE. GUARD. HUNT. CLAIM. BUILD AGENTS THAT DO IT ALL.
+BASECAMP PRESENTER COMPANION
 
-0:00–0:30 | Trade. Guard.
-Hunt. Claim.
-CUE OPEN | 00:00–00:30 | SHOW: Slides
-DO: Start the timer. Introduce yourself and the promise: one useful result, one change, and evidence.
-SAY: Today we will go from an instruction to a result we can inspect. The slides are signposts; we will spend the build on screen.
-LOOK FOR: Laptop-first audience ready; browser lab also works on phones.
-FALLBACK: Use the browser Sui route unless the complete AEX path passed rehearsal. N shows notes in this same window; keep it off on the audience screen.
+00–06 MIN | Why personal agents
+SCREEN: Slides
+DO: Introduce Muse, Instinct, Dots, OpenClaw and Hermes. Ask what work the room would delegate to an agent.
+SAY: An agent needs a place to run, a wallet, a budget and a way to prove what happened.
+LOOK FOR: The room has one concrete agent job in mind.
+IF STUCK: Keep the opening to six minutes; skip extra examples.
 
-Presenter companion: presenter.html. Notes stay off on the audience screen.
+06–11 MIN | Why AEX
+SCREEN: Slides + architecture drill-downs
+DO: Show the market, runtime, inference and security plane. Walk discover → agree → escrow → run → settle.
+SAY: AEX brings the agent, its compute and its spending authority together.
+LOOK FOR: Keep architecture claims separate from today’s installed standalone recipe.
+IF STUCK: Use the architecture diagram; AEX self-deployment is not required for this route.
 
-0:30–2:00 | Personal agents are here.
-Spend 90 seconds on the examples. Muse, Instinct and Dots show why people want persistent personal agents. Describe the experience rather than making an unverified product comparison. Ask: who already delegates ongoing work to an agent? Then move on; do not launch three product demos.
+11–16 MIN | Authority and budget
+SCREEN: Slides
+DO: Explain ownership, limits and the four budgets: AEX, WaaP, transaction gas and position capital.
+SAY: The local build has no AEX deployment fee. A proposal, a simulation and a confirmed transaction are different results.
+LOOK FOR: No one interprets a funding registration receipt as a payment or an unsigned simulation as a swap.
+IF STUCK: Do not promise an allowance until the complete funded recipe has been measured.
 
-Presenter companion: presenter.html. Notes stay off on the audience screen.
+16–20 MIN | Tour one agent
+SCREEN: Deck → runtime console
+DO: Show the seven controls. Explain where each action runs: local computer for builders; Studio through the tunnel for this presenter.
+SAY: Check the runtime. Set up a wallet. Save the strategy. Install the agent. Run and inspect it. Change a rule, then stop.
+LOOK FOR: The audience understands the sequence before downloading.
+IF STUCK: Keep Guardian as a later recipe. Finish one working Rebalancer first.
 
-2:00–3:15 | You can run the agent yourself.
-Spend 75 seconds on OpenClaw and Hermes. The next step is running and extending the agent yourself. Ask what has to exist beyond the model: a runtime, tools, an owner and a budget. Introduce AEX as the place these responsibilities meet.
+20–25 MIN | Build QR and wallet setup
+SCREEN: Build QR → deployment guide → console
+DO: Show Build QR and the full URL. Builders install Node 24, unzip the kit and run node server.mjs --open. Step 01 checks Node; step 02 runs node wallet-setup.mjs in a second terminal. They create or sign in, approve email, copy the Sui address into Strategy, and save.
+SAY: Use your own email and wallet. Once saved, the Funding panel includes that wallet address automatically.
+LOOK FOR: Wallet setup prints an email and full Sui address. Strategy contains that same address. No historical example is used for funding.
+IF STUCK: Pair with a laptop that is ready. If port 8788 is occupied by this console, reuse it. Node 26 is not the tested runtime.
 
-Presenter companion: presenter.html. Notes stay off on the audience screen.
+25–34 MIN | Register, install and run together
+SCREEN: Funding QR → operator → runtime console
+DO: When wallets are ready, select Funding QR and open the 15-minute window on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Return to the console: Install agent → Install dependencies → wait for completion → Start / run → Run once.
+SAY: The install button runs npm ci. Installation does not start the agent. One run reads actual wallet balances and the live Sui pool.
+LOOK FOR: Show installation events, then a fresh checkpoint, price, balances and outcome from the funded presenter wallet.
+IF STUCK: If funding is not ready, explain the actual balance block. Continue installation while funding is processed; do not present historical results as a new run.
 
-3:15–4:30 | Who owns the work?
-Bridge to AEX. The question is not only which model is smartest. A working agent needs a place to run, authority to act, a budget and evidence of what happened. Ask the audience which of these has stopped them from running an agent beyond a demo. These are design questions, not unsupported competitor comparisons.
+34–40 MIN | Change one strategy rule
+SCREEN: Runtime Modify → Run → Inspect
+DO: With a rehearsed funded configuration, change one threshold and run again. Compare HOLD against a proposed action. Inspect quote, unsigned build and Sui simulation separately.
+SAY: The rule changed. Now compare the inputs and explain why the result changed.
+LOOK FOR: Each output is timestamped and has the current configured wallet. A simulation is explicitly labelled.
+IF STUCK: If price or holdings do not meet the rule, explain HOLD. Do not invent a trade. A signed swap is only shown after its separate funded rehearsal passes.
 
-Presenter companion: presenter.html. Notes stay off on the audience screen.
+40–51 MIN | Independent build + funding handoff
+SCREEN: Participant consoles + private funding operator
+DO: At the recorded cutoff, refresh operator controls and export campaign.json and responses.csv. Pass both to the payout agent with the approved allowance, total, source account and reserve. Review the exact plan before sending. Builders check receipts, run, modify and stop their own agent.
+SAY: Keep one result you can explain: the rule, the live inputs and the output.
+LOOK FOR: At most 30 selected recipients; waitlisted builders can continue setup. Every sent payment has its own checked receipt.
+IF STUCK: An unresolved payment stops payout processing. Never create a second ledger to retry. Allowance and source authentication must be ready before live sending.
 
-4:30–5:15 | AEX: a market agents can use.
-Present this explicitly as the AEX architecture and direction, not a claim that every layer is available today. On-chain market records and escrow make the commercial terms inspectable. Identity attributes authority; reputation should be grounded in work receipts. Sovereignty means meaningful choice of runtime/provider and the ability to withdraw access. The security plane mediates actions outside the model prompt. Today is a limited demonstration of the demonstrated path. Do not say all compute settlement occurs on Sui; the Sui workload and compute settlement are distinct.
+51–57 MIN | Share two results
+SCREEN: Slides + two participant outputs
+DO: Ask two builders to show their rule, one result and what they changed. Keep each share to two minutes.
+SAY: What did the agent observe, what did it decide, and what evidence supports that?
+LOOK FOR: A real output and a clear explanation. A confirmed action has a matching explorer receipt.
+IF STUCK: Use the presenter’s retained output if volunteers are not ready.
 
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-5:15–6:00 | The parts of AEX.
-Use the last 45 seconds of the opening for this map. Group the parts into runtime, authority and market. Point to one route through the map; save drill-downs for questions. This adds no time to the six-minute opening. In PPTX, use the Market, Wallet or Escrow reference buttons; return with the button on the reference slide. The complete operational sequence resumes at slide 7. This map describes the architecture; it is not proof that every component is available in the workshop environment.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-6:00–8:00 | What actually runs an agent?
-CUE LAYERS | 06:00–08:00 | SHOW: Slides → browser Guard → slides
-DO: Point at model, runtime and services. Briefly open Guard to show an input, a running loop and output; return to the slides. The monitor is deterministic code; an AI agent can help build or operate it.
-SAY: A model chooses a next step. A runtime executes tools. Services supply data and compute.
-LOOK FOR: Audience can distinguish a monitor from a language-model agent.
-FALLBACK: Stay on the architecture slide if the browser takes more than 45 seconds.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-8:00–9:30 | A lease makes the terms explicit.
-Explain the intended market sequence in plain language. A buyer and provider agree on a resource and its price; escrow holds funds under the settlement terms. Receipts make settlement inspectable. Refund and dispute behavior depends on the actual contract and conditions; do not promise an unconditional refund, automatic quality judgment, or that escrow makes a malicious provider safe. Use the chain shown by the actual environment in a demo, without implying compute settlement is the Sui recipe transaction.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-9:30–11:00 | Make identity and reputation portable.
-Frame identity and reputation as requirements of an open market. A memorable agent name is not an ownership proof; a self-reported success is not a work receipt. Sovereignty includes choosing where the agent runs and retaining the ability to stop or migrate it. Do not imply an operational reputation registry, transferable score or fully portable agent identity has been demonstrated in this workshop.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-11:00–13:00 | Keep authority outside the prompt.
-CUE AUTHORITY | 11:00–16:00 | SHOW: Slides → editor
-DO: Explain TAP service authority versus WaaP transaction authorization. Show the supplied .env.workshop: mainnet, monitor, DRY_RUN=true, pool and range. Open agent.ts and show that active submission is a separate path. Return to slide 11. Do not open session files or credential pages.
-SAY: A prompt describes a job. These settings choose this recipe’s behavior. Actual wallet authorization is a separate check, which we will show when we send a transaction.
-LOOK FOR: Visible read-only intent in the supplied recipe; no private key in the displayed config.
-AUDIENCE: Identify which part reads and which part could write.
-FALLBACK: Do not advertise the current AEX daily-limit selector as proven wallet enforcement; the observed public UI itself describes some settings as recorded/future enforcement.
-
-Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-13:00–14:30 | Separate the four budgets.
-SHOW: Slides
-DO: Explain AEX fees, WaaP fees, gas and position capital as separate allocations. No amount is approved yet. Local workshop loops incur none of the hosted/signing fees.
-SAY: Fund the job we actually run.
-LOOK FOR: No suggestion that a lesson or a code is a funded position.
-FALLBACK: If the funded recipe is not rehearsed, keep the room on the decision loops.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-14:30–16:00 | Read. Propose. Approve. Verify.
-Use this loop throughout the practical. Approval is meaningful only when the person understands the exact network, asset, destination, amount and fees. After submission, verify the outcome independently. If an outcome is pending or unknown, inspect it before retrying. A generated sentence saying success is not a receipt.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-16:00–18:00 | One job. A running agent.
-SHOW: Slide → installed standalone runtime
-DO: Focus on Rebalancer. Guardian stays out of the main demonstration until separately accepted. The recipe uses price thresholds and a dollar target; it is not the old percentage-allocation browser exercise.
-SAY: A useful agent has a real input, a decision and an observable result.
-LOOK FOR: A named installed instance, actual wallet balances and current run output.
-FALLBACK: If the live route is not accepted, identify the precise blocker; do not present the old helper as a deployed agent.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-18:00–20:00 | From source to a running agent.
-SHOW: Deck → local deployment console
-DO: Open the Studio deployment console through the local tunnel. Every operation has its own button and returns actual process output. Leave signing disabled until the exact funded action has been reviewed.
-SAY: Each step produces evidence that the next step can use.
-LOOK FOR: Actual runtime version, configuration, installation and process status.
-FALLBACK: The public download provides the same standalone source; AEX is not required.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-20:00–23:00 | Open the Rebalancer kit.
-SHOW: Kit QR → deployment guide
-DO: Show the single Build QR. The guide provides the downloadable kit and platform-specific launch steps. Explain Node 24 once. Use Build QR first. In step 02, builders create or sign in to their own wallet, approve email, verify the address and save the strategy. Then return here, select Funding QR and open the 15-minute window. Never project the operator key.
-SAY: The same source and controls run locally.
-LOOK FOR: The local console is open, not just a downloaded file.
-FALLBACK: Pair up with a configured laptop if Node setup takes too long.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-23:00–24:00 | Prepare. Configure. Deploy.
-SHOW: Deployment console: Prepare → Configure → Deploy
-DO: Click Prepare and verifyNode24/source. Review the public wallet and real balances; historical default wallet is empty and not signer-verified. Set price thresholds, SUI dollar target and cadence. Click Deploy; inspect npmci output. These are real installation/configuration operations.
-SAY: Deployment makes the recipe executable; funding determines what it can do.
-LOOK FOR: Pinned dependency installation exits successfully.
-FALLBACK: Any configuration or installation error stays visible and blocks the run.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-24:00–27:00 | Start the agent. Read the output.
-SHOW: Deployment console: Run once / Start
-DO: Click Run once first. Inspect the actualJSONL strategy output. Only start repeatedruns after the one-cycle outcome is understood. An unfundedwallet is a blockedrun, not a successfultrade.
-SAY: The log shows what this process actually observed and decided.
-LOOK FOR: Current timestamps, wallet, balance and strategy outcome.
-FALLBACK: Stop on failure; do not replace the wallet with sample holdings.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-27:00–31:00 | Inspect the proposed swap.
-SHOW: Deployment console: Inspect → raw output
-DO: Distinguish quote, unsigned transactionbuild, actualRPCsimulation and liveconfirmedreceipt. Currentdeployment has no signer; only claimstages whose outputexists. Fundingand exactsigningreview are still required before liveexecution.
-SAY: A route is not a receipt. Each stage has its own result.
-LOOK FOR: Amount, minimumoutput, simulationstatus and anyfailure.
-FALLBACK: Retain a failed or unfundedoutcome honestly; do not show historicalreceipts as a newrun.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-31:00–34:00 | Change one rule. Run again.
-SHOW: Deployment console: Stop → Modify → Run once
-DO: Stop scheduledruns, changeonestrategyparameter and save. Run onceagain; compareactualoutputs. The samewalletandsource stayselected.
-SAY: The change is visible in configuration and the next real run.
-LOOK FOR: Bothrunrecords and causeofdecisionchange.
-FALLBACK: Ifcapital ismissing, recordthatblocker; do notchange tosimulatedfunds.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-34:00–35:00 | Stop. Keep the evidence.
-SHOW: Deployment console: Stop → Download output
-DO: ClickStop and verifyrunning=false/nochildprocess. Save realJSONLoutput. Showthe independenttasknext.
-SAY: Stopping is an observable operation.
-LOOK FOR: Noactiveprocessorscheduledrun.
-FALLBACK: Force-stop only this isolated process if the gracefulstop timesout.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-35:00–46:00 | Modify the Rebalancer.
-SHOW: Participant deployment consoles
-DO: Everyonecontinueswiththeinstalledrecipe. Changeoneparameter, runonce, explainandstop. No secondrecipeselection. GuardianfollowsonlyafterRebalancerisstable.
-SAY: One change, one real run, one explanation.
-LOOK FOR: Actualprocessoutput, not prewrittenresults.
-FALLBACK: Pairup iflocalsetupfailed.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-46:00–51:00 | Get one result worth showing.
-CUE SAVE | 46:00–51:00 | SHOW: Participant result
-DO: Stop the monitor/agent. Save your settings, prompt, useful output and real receipt URL if any. Pick two volunteers for 30–45 seconds each.
-SAY: Show what you changed and how you know it worked.
-LOOK FOR: No credentials or invite codes in shared screenshots.
-FALLBACK: If no fresh result exists, label a replay or show an error and the diagnostic step.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-51:00–56:00 | Share a recipe someone can repeat.
-CUE SHARE | 51:00–57:00 | SHOW: Participant screen / AEX listing if rehearsed → resource slide
-DO: Take two short participant demonstrations. AEX: show the actual listing/fork action only if this deployed instance supports it; opening a draft is not publication. Other routes: share workshop-recipe.env and observe.mjs through the selected event channel. Display the official recipe-library QR last.
-SAY: You have a recipe you can repeat. Continuing hosted access depends on the time window we actually provide.
-LOOK FOR: The audience leaves with a source/config and a demonstrated result.
-AUDIENCE: Share code/config without credentials, plus a real receipt or source link where applicable.
-FALLBACK: No verified publication endpoint is assumed. Save files locally if a shared channel is unavailable.
-
-Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-56:00–57:00 | Keep building after today.
-SHOW: build.html#library
-DO: Link the actual sources. Full Guardian publication is a remaining gap, not a shipped starter. Hosted AEX has six starter names; public skills and docs cover a different set.
-SAY: Keep your code, output and next experiment.
-LOOK FOR: No blanket claim that every hosted agent is a public standalone download.
-FALLBACK: Local lesson remains usable independently.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-57:00–60:00 | What will your agent do next?
-CUE CLOSE | 57:00–60:00 | SHOW: Closing slide
-DO: Answer one or two questions and end on time. Stop presenter monitoring processes.
-SAY: Agents need resources, authority and evidence. Today you changed a recipe and checked its output.
-LOOK FOR: A clear finish, with source files saved.
-AUDIENCE: Save your work.
-FALLBACK: Use remaining time for recovery; do not start a new deployment.
-
-Presenter reference: presenter-runbook.html and cetus-lab/workshop-commands.txt beside this deck. These contain the setup and full screen-by-screen sequence.
-CLI close: save the digest and run waap logout in the isolated workshop session. Confirm revocation. Do not confuse logout with stopping an AEX agent.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-APPENDIX A · non-chain fallback | A. No wallet? Run a research scout.
-This is the genuine non-chain fallback: it needs a running model and web/source access, not a wallet, RPC or funds. Use the hosted agent already available. If browsing is unavailable but inference works, supply prepared source extracts and label the result as based on those extracts. If the network is entirely unavailable, use appendix C. Verify every link and do not invent opportunities. The prompt is complete and can be pasted into an existing agent; its tools still need rehearsal.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-APPENDIX B · participant recovery | B. If a participant gets stuck.
-SHOW: Builder guide → chosen lesson
-DO: Use the browser route or pair up. Funding and AEX admission are separate from access to the public exercises. Only share the actual live registration/waitlist form.
-SAY: You can complete the lesson while funding is processed.
-LOOK FOR: No credentials or private codes projected.
-FALLBACK: Hunt is the non-chain fallback.
-Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
-
-APPENDIX C · offline recovery | C. If the venue connection drops.
-Use the saved monitor logs, clearly labeled captured evidence. No funded presenter transfer or complete AEX recording is presumed to exist. An offline discussion can explain the code and receipts, but does not become a fresh live result. Keep the lesson moving and record the failed step for after the session.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-APPENDIX D · references | Sources and further reading
-Primary sources verified on October 4, 2026. Detailed URLs are in each relevant slide’s notes. AEX market, identity and reputation slides describe architecture and design goals, not a blanket claim of shipped functionality. No adoption counts, valuation comparisons or yield guarantees are used.
-
-Presenter companion: presenter.html. Notes stay off on the audience screen.
-
-APPENDIX E · command card | The command card.
-Download workshop-agent.mjs from build.html. Open terminal in the download folder. Commands are decision-only. No wallet sessions, keys or AEX deployment. For the full recipe use the public guide and its own prerequisites.
-
-APPENDIX F · screen map | Screens to keep open.
-Keep presenter notes private: N opens notes in the audience deck itself. Download workshop-agent.mjs ahead of time. Pre-open build.html, live pool lab and explorer. AEX remains optional after coordinator acceptance. Keep signup/email/private codes/session files off screen.
+57–60 MIN | Close
+SCREEN: Closing slide
+DO: Ask what they will build next. Link the deployment guide and canonical recipe. Confirm the presenter’s monitoring is stopped.
+SAY: Keep the recipe, your configuration and your evidence.
+LOOK FOR: Builders know the next step and the session ends on time.
+IF STUCK: No operator checklist or setup appendix in the audience deck.
