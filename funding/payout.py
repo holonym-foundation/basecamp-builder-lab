@@ -39,13 +39,14 @@ def email(value):
     return value
 
 
-def email_registration(row, start, end, sender):
+def email_registration(row, start, end, sender, advisory=False):
     require(isinstance(row, dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in row.items()), 'Malformed registration row')
     require(row.get('response_id'), 'Missing response ID')
-    require(row.get('status') == 'selected', 'not-selected')
+    require(row.get('status') in ('selected', 'waitlist') if advisory else row.get('status') == 'selected', 'not-selected')
     require(row.get('binding_status') == 'participant-provided', 'Unsupported wallet binding status')
     when = timestamp(row['submitted_at'])
-    require(start <= when < end, 'outside-window')
+    if not advisory:
+        require(start <= when < end, 'outside-window')
     participant = email(row['email'])
     recipient = address(row['address'].strip())
     require(recipient != sender, 'sender-is-recipient')
@@ -88,7 +89,57 @@ def write_private(path, value):
         os.fsync(file.fileno())
 
 
+def advisory_rows(rows, sender):
+    """Verify the complete server export; clock time never changes its ordering."""
+    parsed, seen_emails, seen_wallets = [], set(), set()
+    for row in rows:
+        _, participant, recipient = email_registration(row, None, None, sender, advisory=True)
+        match = re.fullmatch(r'([0-9]{4,})-[a-zA-Z0-9-]+', row['response_id'])
+        require(match is not None, 'Missing server registration order; re-export the complete campaign')
+        rank = int(match[1])
+        require(participant not in seen_emails and recipient not in seen_wallets, 'Duplicate email/wallet in server export; re-export for review')
+        seen_emails.add(participant)
+        seen_wallets.add(recipient)
+        require(row['status'] == ('selected' if rank <= 30 else 'waitlist'), 'Server selection disagrees with first-come order')
+        parsed.append((rank, participant, recipient, dict(row)))
+    parsed.sort(key=lambda item: item[0])
+    require([r[0] for r in parsed] == list(range(1, len(parsed)+1)), 'Incomplete or duplicate server registration order; re-export the complete campaign')
+    require(parsed, 'No eligible recipients')
+    return parsed
+
+
+def make_advisory_plan(config, codes, rows, sender, amount, maximum, reserve):
+    require(config.get('version') == 2 and config.get('intake') == 'email'
+            and config.get('windowPolicy') == 'advisory' and config.get('selectionPolicy') == 'first-come-first-served', 'Unsupported email campaign policy')
+    require(config.get('network') in NETWORKS and config.get('cap') == 30, 'Invalid email campaign network/cap')
+    require(config.get('walletSource') == 'participant-provided' and config.get('requiresReview') is True,
+            'Email campaign must declare participant-provided wallets requiring review')
+    require(not codes, 'Invite codes do not apply to email intake')
+    require(re.fullmatch(r'[a-zA-Z0-9-]{8,64}', config['campaign']), 'Invalid campaign ID')
+    for field in ('openedAt', 'closedAt'):
+        if config.get(field) is not None:
+            timestamp(config[field])
+    sender = address(sender)
+    amount, maximum, reserve = mist(amount), mist(maximum), mist(reserve)
+    parsed = advisory_rows(rows, sender)
+    recipients = [{'address': recipient, 'email': participant, 'response_id': row['response_id'],
+                   'registration': row, 'registrationHash': digest(row)}
+                  for rank, participant, recipient, row in parsed if rank <= 30]
+    total = len(recipients)*amount
+    require(total <= maximum <= U64, 'Recipient total exceeds the approved maximum')
+    plan = dict(version=3, campaignVersion=2, campaign=config['campaign'], network=config['network'], sender=sender,
+                intake='email', windowPolicy='advisory', selectionPolicy='first-come-first-served',
+                walletSource='participant-provided', requiresReview=True, cap=30,
+                openedAt=config.get('openedAt'), closedAt=config.get('closedAt'), amountMist=str(amount),
+                totalMist=str(total), maxTotalMist=str(maximum), gasReserveMist=str(reserve),
+                registrationRows=[row for _, _, _, row in parsed], recipients=recipients)
+    report = [{'response_id': row['response_id'], 'status': row['status']} for _, _, _, row in parsed]
+    return {'plan': plan, 'sha256': digest(plan), 'report': report}
+
+
 def make_plan(config, codes, rows, sender, amount, maximum, reserve):
+    if config.get('intake') == 'email' and any(key in config for key in ('version', 'windowPolicy', 'selectionPolicy')):
+        return make_advisory_plan(config, codes, rows, sender, amount, maximum, reserve)
     require(config['network'] in NETWORKS, 'Unsupported network')
     require(config['cap'] == 30, 'Campaign cap must be 30')
     start, end = timestamp(config['openedAt']), timestamp(config['closedAt'])
@@ -181,7 +232,7 @@ def make_plan(config, codes, rows, sender, amount, maximum, reserve):
 def validate_plan(envelope):
     p = envelope['plan']
     require(envelope['sha256'] == digest(p), 'Plan hash mismatch')
-    require(p['version'] in (1, 2) and p['network'] in NETWORKS, 'Unsupported plan')
+    require(p['version'] in (1, 2, 3) and p['network'] in NETWORKS, 'Unsupported plan')
     address(p['sender'])
     require(1 <= len(p['recipients']) <= 30, 'Invalid recipient count')
     recipients = [address(r['address']) for r in p['recipients']]
@@ -191,11 +242,19 @@ def validate_plan(envelope):
     else:
         require(p.get('intake') == 'email' and p.get('walletSource') == 'participant-provided'
                 and p.get('requiresReview') is True and p.get('cap') == 30, 'Invalid email plan review requirements')
+        if p['version'] == 3:
+            require(p.get('campaignVersion') == 2 and p.get('windowPolicy') == 'advisory'
+                    and p.get('selectionPolicy') == 'first-come-first-served', 'Invalid advisory campaign policy')
+            parsed = advisory_rows(p['registrationRows'], p['sender'])
+            require([r['registration'] for r in p['recipients']] == [row for rank, _, _, row in parsed if rank <= 30],
+                    'Recipients differ from first-come registration order')
         seen_emails, seen_ids = set(), set()
         for recipient in p['recipients']:
             row = recipient['registration']
             require(recipient['registrationHash'] == digest(row), 'Registration hash mismatch')
-            _, participant, wallet = email_registration(row, timestamp(p['openedAt']), timestamp(p['closedAt']), p['sender'])
+            _, participant, wallet = email_registration(row,
+                timestamp(p['openedAt']) if p['version'] == 2 else None,
+                timestamp(p['closedAt']) if p['version'] == 2 else None, p['sender'], advisory=p['version'] == 3)
             require(recipient['email'] == participant and recipient['address'] == wallet
                     and recipient['response_id'] == row['response_id'], 'Recipient differs from registration')
             require(participant not in seen_emails and row['response_id'] not in seen_ids, 'Duplicate email/registration')
@@ -203,8 +262,9 @@ def validate_plan(envelope):
             seen_ids.add(row['response_id'])
     amount, total, maximum, reserve = (int(p[k]) for k in ('amountMist', 'totalMist', 'maxTotalMist', 'gasReserveMist'))
     require(0 < amount <= total <= maximum <= U64 and total == len(recipients)*amount and 0 < reserve <= U64, 'Invalid totals')
-    require((timestamp(p['closedAt'])-timestamp(p['openedAt'])).total_seconds() == 900, 'Invalid window')
-    require(dt.datetime.now(dt.timezone.utc) >= timestamp(p['closedAt']), 'Registration not closed')
+    if p['version'] in (1, 2):
+        require((timestamp(p['closedAt'])-timestamp(p['openedAt'])).total_seconds() == 900, 'Invalid window')
+        require(dt.datetime.now(dt.timezone.utc) >= timestamp(p['closedAt']), 'Registration not closed')
     return p
 
 

@@ -285,5 +285,74 @@ class EmailPayoutTests(unittest.TestCase):
         legacy.test_confirmed_restart_no_double_pay_and_plan_binding()
 
 
+class AdvisoryPayoutTests(unittest.TestCase):
+    setUp = EmailPayoutTests.setUp
+    rows = EmailPayoutTests.rows
+    plan = EmailPayoutTests.plan
+    def advisory(self, rows=None, **changes):
+        config = dict(self.config, version=2, windowPolicy='advisory', selectionPolicy='first-come-first-served', openedAt=None, closedAt=None)
+        config.update(changes)
+        if rows is None:
+            rows = self.advisory_rows()
+        return self.plan(rows, config=config)
+
+    def advisory_rows(self, count=1):
+        rows = self.rows(count)
+        for n, row in enumerate(rows, 1):
+            row['response_id'] = f'{n:04}-registration'
+            row['status'] = 'selected' if n <= 30 else 'waitlist'
+        return rows
+
+    def test_advisory_accepts_no_timer_before_open_and_after_expiry(self):
+        for timer in ({}, {'openedAt': '2099-01-01T04:30:00Z', 'closedAt': '2099-01-01T04:45:00Z'},
+                      {'openedAt': '2020-01-01T04:30:00Z', 'closedAt': '2020-01-01T04:45:00Z'}):
+            with self.subTest(timer=timer):
+                result = self.advisory(**timer)
+                self.assertEqual(p.validate_plan(result)['version'], 3)
+        config = dict(self.config, version=2, windowPolicy='advisory', selectionPolicy='first-come-first-served')
+        del config['openedAt']; del config['closedAt']
+        p.validate_plan(self.plan(self.advisory_rows(), config))
+
+    def test_rank_beats_timestamps_and_preserves_first_thirty(self):
+        rows = self.advisory_rows(44)
+        rows[0]['submitted_at'] = '2026-02-01T00:00:00Z'
+        result = self.advisory(list(reversed(rows)))
+        plan = p.validate_plan(result)
+        self.assertEqual(len(plan['recipients']), 30)
+        self.assertEqual(len(plan['registrationRows']), 44)
+        self.assertEqual(plan['recipients'][0]['response_id'], '0001-registration')
+        self.assertEqual(plan['recipients'][-1]['response_id'], '0030-registration')
+        self.assertEqual(sum(row['status']=='waitlist' for row in result['report']), 14)
+
+    def test_export_gaps_duplicates_and_status_conflicts_rejected(self):
+        for kind in ('gap', 'duplicate-rank', 'duplicate-email', 'duplicate-wallet', 'early-waitlist', 'late-selected'):
+            with self.subTest(kind=kind):
+                rows = self.advisory_rows(31)
+                if kind == 'gap': rows.pop(0)
+                elif kind == 'duplicate-rank': rows[1]['response_id'] = '0001-another'
+                elif kind == 'duplicate-email': rows[1]['email'] = ' BUILDER+0@EXAMPLE.TEST '
+                elif kind == 'duplicate-wallet': rows[1]['address'] = rows[0]['address']
+                elif kind == 'early-waitlist': rows[0]['status'] = 'waitlist'
+                elif kind == 'late-selected': rows[-1]['status'] = 'selected'
+                with self.assertRaises(ValueError): self.advisory(rows)
+
+    def test_advisory_plan_cannot_reorder_or_drop_recipients(self):
+        result = self.advisory(self.advisory_rows(3))
+        for mutate in ('reverse', 'drop', 'row-field'):
+            changed = copy.deepcopy(result)
+            if mutate == 'reverse': changed['plan']['recipients'].reverse()
+            elif mutate == 'drop': changed['plan']['recipients'].pop(0)
+            else: changed['plan']['registrationRows'][0]['email'] = 'replacement@example.test'
+            changed['sha256'] = p.digest(changed['plan'])
+            with self.assertRaises(ValueError): p.validate_plan(changed)
+        for key, value in [('version', 3), ('windowPolicy', 'ignored'), ('selectionPolicy', 'random')]:
+            with self.assertRaises(ValueError): self.advisory(**{key: value})
+
+    def test_advisory_execution_preserves_no_retry_and_receipt_binding(self):
+        legacy = PayoutTests(); legacy.setUp(); legacy.plan = self.advisory
+        legacy.test_interrupted_dispatch_is_never_retried()
+        legacy.test_confirmed_restart_no_double_pay_and_plan_binding()
+
+
 if __name__ == '__main__':
     unittest.main()
