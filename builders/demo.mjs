@@ -46,7 +46,12 @@ function render(){
   const current=runs.filter(r=>r.output.explorer).at(-1);$('current-evidence').hidden=!current;if(current)$('current-evidence').href=current.output.explorer;
   drawResults();
 }
-function choose(name,updateHash=true){recipe=name;stage=0;runs=[];evidenceReviewed=false;finished=false;const l=lessons[name];$('name').textContent=l.name;$('boundary').textContent=l.boundary;$('commands').textContent='node --version  # use Node 24\n'+l.command;$('edit').textContent=l.edit;$('edit-command').textContent=l.change;$('target').value=70;$('band').value=5;$('scenario').value='healthy';$('hf').value=1.3;$('run-status').textContent='';document.querySelectorAll('[data-recipe]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.recipe===name)));if(updateHash)history.replaceState(null,'',location.pathname+location.search+'#'+name);render();}
+function choose(name,updateHash=true){recipe=name;stage=0;runs=[];evidenceReviewed=false;finished=false;const l=lessons[name];$('name').textContent=l.name;$('boundary').textContent=l.boundary;$('commands').textContent='node --version  # use Node 24\n'+l.command;$('edit').textContent=l.edit;$('edit-command').textContent=l.change;$('target').value=70;$('band').value=5;$('scenario').value='healthy';$('hf').value=1.3;$('run-status').textContent='';$('execution').hidden=true;$('execution-log').replaceChildren();document.querySelectorAll('[data-recipe]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.recipe===name)));if(updateHash)history.replaceState(null,'',location.pathname+location.search+'#'+name);render();}
+function logExecution(operation, detail) {
+  const li=document.createElement('li'),time=document.createElement('time');
+  time.dateTime=new Date().toISOString();time.textContent=new Date().toLocaleTimeString('en-GB',{hour12:false});
+  li.append(time,document.createTextNode(operation+' — '+detail));$('execution-log').append(li);
+}
 function setBusy(value){busy=value;document.querySelectorAll('#lesson button,[data-recipe],#lesson input,#lesson select').forEach(b=>b.disabled=value);}
 async function execute(kind){
   if(busy)return;
@@ -56,9 +61,9 @@ async function execute(kind){
     if(inputs.some(el=>!el.reportValidity()))return;
   }
   // Retrying a failed new read must not retain an older successful current run.
-  runs=runs.filter(r=>r.kind!==kind);render();setBusy(true);$('run-status').textContent=recipe==='rebalancer'?'Reading Sui mainnet…':'Calculating the labelled scenario…';
-  try{const output=await run(recipe,settings);runs.push({kind,settings,completedAt:new Date().toISOString(),output});$('run-status').textContent=kind==='unknown'?'Missing-data check complete. The decision stops without proposing an action.':'Run complete. '+(kind==='baseline'?'Continue to change one setting.':'Continue to compare the results.');}
-  catch(e){$('run-status').textContent='Read stopped: '+e.message+'. No new result was recorded. Retry this read; Guardian scenarios also work without a chain connection.';}
+  runs=runs.filter(r=>r.kind!==kind);render();setBusy(true);$('execution').hidden=false;$('execution-log').replaceChildren();$('invocation').textContent='await run('+JSON.stringify(recipe)+', '+JSON.stringify(settings)+')';logExecution('Started',recipe==='rebalancer'?'Browser execution · live price read':'Browser execution · scenario calculation');$('run-status').textContent=recipe==='rebalancer'?'Reading Sui mainnet…':'Calculating the labelled scenario…';
+  try{const output=await run(recipe,{...settings,onEvent:event=>logExecution(event.operation,event.detail)});logExecution('Returned',output.decision+' · no transaction submitted');runs.push({kind,settings,completedAt:new Date().toISOString(),output});$('run-status').textContent=kind==='unknown'?'Missing-data check complete. The decision stops without proposing an action.':'Run complete. '+(kind==='baseline'?'Continue to change one setting.':'Continue to compare the results.');}
+  catch(e){logExecution('Failed',e.message);$('run-status').textContent='Read stopped: '+e.message+'. No new result was recorded. Retry this read; Guardian scenarios also work without a chain connection.';}
   finally{setBusy(false);render();}
 }
 if(present)window.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();window.parent.postMessage('workshop-demo-close',location.origin);}});

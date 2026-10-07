@@ -7,7 +7,8 @@ function finite(value, name, min = 0) {
   if (typeof value !== 'number' || !Number.isFinite(value) || value < min) throw Error(`Invalid ${name}`);
   return value;
 }
-export async function readPrice() {
+export async function readPrice({onEvent = () => {}} = {}) {
+  onEvent({operation:"Sui GraphQL request", detail:"POST graphql.mainnet.sui.io/graphql · pool object + checkpoint"});
   const query = `{ object(address: "${POOL}") { asMoveObject { contents { json type { repr } } } } checkpoint { sequenceNumber timestamp } }`;
   const res = await fetch('https://graphql.mainnet.sui.io/graphql', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
@@ -15,6 +16,7 @@ export async function readPrice() {
   });
   if (!res.ok) throw Error(`Sui read failed: HTTP ${res.status}`);
   const response = await res.json();
+  onEvent({operation:"Sui GraphQL response", detail:`HTTP ${res.status} · validating pair, pause state and checkpoint freshness`});
   if (response.errors) throw Error(response.errors[0].message);
   const {object, checkpoint} = response.data;
   const contents = object?.asMoveObject?.contents;
@@ -26,6 +28,7 @@ export async function readPrice() {
   const ratio = Number(BigInt(contents.json.current_sqrt_price)) / 2 ** 64;
   const price = 1 / (ratio * ratio * 10 ** (6 - 9));
   finite(price, 'price', Number.MIN_VALUE);
+  onEvent({operation:"Pool read verified", detail:`Checkpoint ${checkpoint.sequenceNumber} · SUI $${price.toFixed(6)} · ${checkpoint.timestamp}`});
   return {price, chain: 'Sui mainnet', checkpoint: checkpoint.sequenceNumber,
     chainTime: checkpoint.timestamp, readAt: new Date().toISOString(),
     pool: POOL, explorer: `https://suiscan.xyz/mainnet/object/${POOL}`};
@@ -69,10 +72,12 @@ export function guardian(scenario = 'at-risk', target = 1.3) {
 }
 export async function run(recipe, options = {}) {
   if (recipe === 'rebalancer') {
-    const live = await readPrice();
+    const live = await readPrice(options);
+    options.onEvent?.({operation:"rebalance()", detail:`Calculating target ${100 * (options.target ?? .5)}% · sample holdings 10 SUI + 10 USDC`});
     return {recipe: 'Sui Rebalancer workshop loop', ...live,
       ...rebalance(live.price, options.target ?? .5, options.band ?? .05)};
   }
+  if (recipe === 'guardian') options.onEvent?.({operation:"guardian()", detail:`Calculating labelled ${options.scenario ?? 'at-risk'} scenario · target ${options.target ?? 1.3} · no network request`});
   if (recipe === 'guardian') return {recipe: 'Liquidation Guardian workshop loop',
     ...guardian(options.scenario ?? 'at-risk', options.target ?? 1.3)};
   throw Error('Choose rebalancer or guardian');
