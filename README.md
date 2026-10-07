@@ -18,7 +18,7 @@ The site root redirects to the build guide. The earlier Pool Watcher page has be
 4. Slide 18: install dependencies, run the recipe and inspect the decision.
 5. Change a rule, compare results and stop monitoring.
 
-The local Rebalancer reads actual mainnet prices and wallet balances. It proposes SUI/USDC swaps using price thresholds and a SUI dollar target. The distributed kit builds and simulates unsigned transactions; signing and submission are not enabled. HOLD, BUY SUI or SELL SUI is distinct from execution status.
+The local Rebalancer reads actual mainnet prices and wallet balances. It proposes Sui/USDC swaps using price thresholds and a Sui dollar target. The distributed kit builds and simulates unsigned transactions; signing and submission are not enabled. HOLD, BUY Sui or SELL Sui is distinct from execution status.
 
 ## Funding
 

@@ -28,7 +28,7 @@ export async function readPrice({onEvent = () => {}} = {}) {
   const ratio = Number(BigInt(contents.json.current_sqrt_price)) / 2 ** 64;
   const price = 1 / (ratio * ratio * 10 ** (6 - 9));
   finite(price, 'price', Number.MIN_VALUE);
-  onEvent({operation:"Pool read verified", detail:`Checkpoint ${checkpoint.sequenceNumber} · SUI $${price.toFixed(6)} · ${checkpoint.timestamp}`});
+  onEvent({operation:"Pool read verified", detail:`Checkpoint ${checkpoint.sequenceNumber} · Sui $${price.toFixed(6)} · ${checkpoint.timestamp}`});
   return {price, chain: 'Sui mainnet', checkpoint: checkpoint.sequenceNumber,
     chainTime: checkpoint.timestamp, readAt: new Date().toISOString(),
     pool: POOL, explorer: `https://suiscan.xyz/mainnet/object/${POOL}`};
@@ -41,7 +41,7 @@ export function rebalance(price, target = .5, band = .05) {
   const total = sampleSui * price + sampleUsdc;
   const allocation = sampleSui * price / total;
   const deltaUsdc = target * total - sampleSui * price;
-  return {holdings: 'SIMULATED: 10 SUI + 10 USDC', target, band,
+  return {holdings: 'SIMULATED: 10 Sui + 10 USDC', target, band,
     currentAllocation: allocation,
     decision: Math.abs(allocation - target) <= band ? 'HOLD' : deltaUsdc > 0 ? 'PROPOSE_BUY_SUI' : 'PROPOSE_SELL_SUI',
     proposedValueUsdc: Math.abs(allocation - target) <= band ? 0 : Math.abs(deltaUsdc),
@@ -73,7 +73,7 @@ export function guardian(scenario = 'at-risk', target = 1.3) {
 export async function run(recipe, options = {}) {
   if (recipe === 'rebalancer') {
     const live = await readPrice(options);
-    options.onEvent?.({operation:"rebalance()", detail:`Calculating target ${100 * (options.target ?? .5)}% · sample holdings 10 SUI + 10 USDC`});
+    options.onEvent?.({operation:"rebalance()", detail:`Calculating target ${100 * (options.target ?? .5)}% · sample holdings 10 Sui + 10 USDC`});
     return {recipe: 'Sui Rebalancer workshop loop', ...live,
       ...rebalance(live.price, options.target ?? .5, options.band ?? .05)};
   }
