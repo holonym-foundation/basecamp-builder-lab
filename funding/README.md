@@ -1,4 +1,4 @@
-# Workshop registration and native SUI payouts
+# Workshop registration and native Sui payouts
 
 The participant uses the Funding screen after saving their Sui address in Strategy. They enter their email; the console submits that email and saved address together. The public Funding QR accepts the same pair directly. No attendee invite code or operator key is required.
 
@@ -31,7 +31,7 @@ The operator key unlocks registration controls only. It does not connect or auth
 
 A web wallet signed in with an email link, social login or passkey does not necessarily have a CLI password. The pinned CLI supports email/password login; it does not reuse the browser session. Do not run signup to access an existing funded account.
 
-For a single rehearsal transfer, use the existing wallet at https://waap.xyz, sign in normally, select SUI on mainnet and prepare a Send to the participant's full saved Sui address. Review the amount and network in the wallet before approval. A registration receipt does not authorize a payment. Record the confirmed transaction digest; do not include an already-paid recipient in an automatic payout without reconciling that payment.
+For a single rehearsal transfer, use the existing wallet at https://waap.xyz, sign in normally, select Sui on mainnet and prepare a Send to the participant's full saved Sui address. Review the amount and network in the wallet before approval. A registration receipt does not authorize a payment. Record the confirmed transaction digest; do not include an already-paid recipient in an automatic payout without reconciling that payment.
 
 For CLI payouts from the same account:
 
@@ -46,11 +46,11 @@ WAAP_CLI_ENV=production npx --yes @human.tech/waap-cli@2.2.1 reset-password --em
 4. Run the local funding-wallet sign-in launcher and enter the new password at its hidden prompt. Keep its isolated session directory. No funds move during login.
 5. Check `whoami` using that session and the pinned CLI. Compare its email and full Sui address with the web wallet. Only proceed when they match and mainnet balance/gas checks pass.
 
-The presenter completed CLI login on October 7. Its Sui sender matched the confirmed 1 SUI rehearsal funding transfer. Batch distribution has not yet been rehearsed. Never treat matching email alone as proof that the intended funded wallet is connected. The independent recipient wallet setup does not authenticate the funding account.
+The presenter completed CLI login on October 7. Its Sui sender matched the confirmed 1 Sui rehearsal funding transfer. Batch distribution has not yet been rehearsed. Never treat matching email alone as proof that the intended funded wallet is connected. The independent recipient wallet setup does not authenticate the funding account.
 
 ## Before any batch: earlier manual payments
 
-The rehearsal wallet already received its 1 SUI. The current script cannot import an earlier manual payment into a new payout ledger: `reconcile` only resolves a dispatch that this ledger already recorded. If a selected export includes an already-paid presenter or rehearsal wallet, stop before execute and have the payout agent resolve the cohort or add an explicitly reviewed prior-payment import. Do not delete rows from the complete export or send a second payment by assumption.
+The rehearsal wallet already received its 1 Sui. The current script cannot import an earlier manual payment into a new payout ledger: `reconcile` only resolves a dispatch that this ledger already recorded. If a selected export includes an already-paid presenter or rehearsal wallet, stop before execute and have the payout agent resolve the cohort or add an explicitly reviewed prior-payment import. Do not delete rows from the complete export or send a second payment by assumption.
 
 ## Send from the dedicated funding session
 
@@ -65,7 +65,7 @@ python3 funding/payout.py execute \
   --confirm EXACT_REVIEWED_PLAN_SHA256
 ```
 
-Execution sends real native SUI. It checks CLI version, sender, network identity and balance; persists intent before each dispatch; and verifies each receipt before continuing. The reserve is a sender balance floor, not a hard transaction gas limit. On an uncertain outcome, stop and retain the ledger. Never create another ledger or blindly retry to work around an unresolved payment.
+Execution sends real native Sui. It checks CLI version, sender, network identity and balance; persists intent before each dispatch; and verifies each receipt before continuing. The reserve is a sender balance floor, not a hard transaction gas limit. On an uncertain outcome, stop and retain the ledger. Never create another ledger or blindly retry to work around an unresolved payment.
 
 If the exact transaction digest is independently known, reconcile without sending:
 
@@ -81,4 +81,4 @@ Keep the operator key, authenticated session, exports, plan and ledger private. 
 
 Use Separate rehearsal campaign (testnet) in the operator screen and register.html?rehearsal=1 for form rehearsal. Console ?rehearsal=1 sends registrations to that isolated lane; it does not change the agent recipe’s mainnet read configuration. Keep test registrations in that rehearsal lane; the real registration accepts submissions without an open timer.
 
-Run source tests with `python3 -m unittest -v` from this folder. Tests use injected wallet/RPC functions, not real funds. The funding sender is authenticated and the manual 1 SUI rehearsal transfer is confirmed. A live batch payout rehearsal and measured participant allowance remain required before calling batch distribution proven.
+Run source tests with `python3 -m unittest -v` from this folder. Tests use injected wallet/RPC functions, not real funds. The funding sender is authenticated and the manual 1 Sui rehearsal transfer is confirmed. A live batch payout rehearsal and measured participant allowance remain required before calling batch distribution proven.

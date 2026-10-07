@@ -13,7 +13,7 @@ Click Install dependencies (or Install dependencies again). Wait for Dependencie
 Click Run once. Wait for a fresh timestamp and output. Read the actual outcome, including any funding block; an unsigned simulation is not a submitted swap.
 
 05 Inspect | http://127.0.0.1:8788/#inspect
-Read HOLD, BUY SUI or SELL SUI, its reason and the separate dry-run status. Proposed amounts are quoted, not transferred. Expand Raw execution output for evidence.
+Read HOLD, BUY Sui or SELL Sui, its reason and the separate dry-run status. Proposed amounts are quoted, not transferred. Expand Raw execution output for evidence.
 
 06 Modify | http://127.0.0.1:8788/#modify
 Change one threshold, click Apply configuration, then return to 04 Start / run and click Run once.
