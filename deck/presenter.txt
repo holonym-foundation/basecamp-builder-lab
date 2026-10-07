@@ -53,14 +53,14 @@ IF STUCK: Keep Guardian as a later recipe. Finish one working Rebalancer first.
 
 20–25 MIN | Build QR and wallet setup
 SCREEN: Build QR → deployment guide → console
-DO: Show Build QR and the full URL. Builders install Node 24, unzip the kit and run node server.mjs --open. Step 01 checks Node; step 02 runs node wallet-setup.mjs in a second terminal. They create or sign in, approve email, copy the Sui address into Strategy, and save.
+DO: Show Build QR and the full URL. Builders install Node 24, unzip the kit and run PORT=8788 node server.mjs --open (or PORT=8789 for the separate local rehearsal). Step 01 checks Node; step 02 runs node wallet-setup.mjs in a second terminal. They create or sign in, approve email, copy the Sui address into Strategy, and save.
 SAY: Use your own email and wallet. Once saved, the Funding panel includes that wallet address automatically.
 LOOK FOR: Wallet setup prints an email and full Sui address. Strategy contains that same address. No historical example is used for funding.
-IF STUCK: Pair with a laptop that is ready. If port 8788 is occupied by this console, reuse it. Node 26 is not the tested runtime.
+IF STUCK: Pair with a laptop that is ready. Choose port 8789 below for a separate local rehearsal, or 8788 to reuse the existing console. Keep the selected port and launch command matched. Node 26 is not the tested runtime.
 
 25–34 MIN | Register, install and run together
 SCREEN: Funding QR → operator → runtime console
-DO: When wallets are ready, select Funding QR and open the 15-minute window on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Use the numbered console links below. Open 03 Install agent and click Install dependencies. Wait until Dependencies reads Installed. Open 04 Start / run and click Run once. Read the new output before proceeding.
+DO: When wallets are ready, select Funding QR. Registration accepts submissions without starting a timer. Optionally start a 15-minute reminder on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Use the numbered console links below. Open 03 Install agent and click Install dependencies. Wait until Dependencies reads Installed. Open 04 Start / run and click Run once. Read the new output before proceeding.
 SAY: The install button runs npm ci. Installation does not start the agent. One run reads actual wallet balances and the live Sui pool.
 LOOK FOR: Show installation events, then a fresh checkpoint, price, balances and outcome from the funded presenter wallet.
 IF STUCK: If funding is not ready, explain the actual balance block. Continue installation while funding is processed; do not present historical results as a new run.
@@ -74,7 +74,7 @@ IF STUCK: If price or holdings do not meet the rule, explain HOLD. Do not invent
 
 40–57 MIN | Independent build + funding handoff
 SCREEN: Participant consoles + private funding operator
-DO: At the recorded cutoff, refresh operator controls and export campaign.json and responses.csv. Pass both to the payout agent with the approved allowance, total, source account and reserve. Review the exact plan before sending. Builders check receipts, run, modify and stop their own agent.
+DO: When ready to fund, refresh operator controls and export campaign.json and responses.csv. The first 30 unique registrations are selected in server order; the rest join the waitlist. Pass both to the payout agent with the approved allowance, total, source account and reserve. Review the exact plan before sending. Builders check receipts, run, modify and stop their own agent.
 SAY: Keep one result you can explain: the rule, the live inputs and the output.
 LOOK FOR: At most 30 selected recipients; waitlisted builders can continue setup. Every sent payment has its own checked receipt.
 IF STUCK: An unresolved payment stops payout processing. Never create a second ledger to retry. Allowance and source authentication must be ready before live sending.

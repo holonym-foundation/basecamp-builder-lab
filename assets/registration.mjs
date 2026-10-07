@@ -12,8 +12,9 @@ function render() {
   $('dot').classList.toggle('live', status?.state === 'open');
   if (!status) $('window').textContent = 'Checking registration…';
   else if (status.state === 'unavailable') $('window').textContent = 'Connection unavailable. Your registration has not been submitted.';
-  else if (status.state === 'waiting') $('window').textContent = 'Registration opens when the host starts the window.';
+  else if (status.state === 'waiting') $('window').textContent = 'Registration is not accepting requests yet. Check again shortly.';
   else if (status.state === 'closed') $('window').textContent = 'Registration has closed. You can still follow the builder guides.';
+  else if (status.windowPolicy === 'advisory') $('window').textContent = 'Registration open · first 30 unique registrations get funded places; later registrations join the waitlist.';
   else {
     const seconds = Math.max(0, Math.ceil((Date.parse(status.closed_at) - Date.now()) / 1000));
     // Display only: the server, not the participant's clock, enforces the cutoff.
@@ -36,7 +37,7 @@ async function refresh() {
   refreshing = true;
   try {
     const next = await request('/api/status');
-    if (!['waiting','open','closed'].includes(next.state) || !['mainnet','testnet'].includes(next.network) || (next.state === 'open' && !Number.isFinite(Date.parse(next.closed_at)))) throw Error('Invalid registration status');
+    if (!['waiting','open','closed'].includes(next.state) || !['mainnet','testnet'].includes(next.network) || (next.state === 'open' && next.windowPolicy !== 'advisory' && !Number.isFinite(Date.parse(next.closed_at)))) throw Error('Invalid registration status');
     status = next;
   } catch { status = {state:'unavailable'}; }
   finally { refreshing = false; render(); }
@@ -48,7 +49,7 @@ $('registration').onsubmit = async event => {
   const email = $('email').value.trim().toLowerCase(), address = $('address').value.trim().toLowerCase();
   $('error').hidden = true;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254 || !/^0x[0-9a-f]{64}$/.test(address) || BigInt(address) <= 15n) {
-    $('error').textContent = 'Enter your email and the full Sui address from wallet setup.';
+    $('error').textContent = 'Enter your email and full Sui address: 0x followed by 64 hexadecimal characters. Use the Sui address from wallet setup, not an Ethereum address.';
     $('error').hidden = false; return;
   }
   busy = true; render();
