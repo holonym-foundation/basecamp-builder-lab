@@ -79,76 +79,76 @@ Use this loop throughout the practical. Approval is meaningful only when the per
 
 Presenter companion: presenter.html. Notes stay off on the audience screen.
 
-16:00–18:00 | Two Sui jobs to build.
-SHOW: Slide → builder guide
-DO: Introduce the two choices. Rebalancer uses live Sui price + sample holdings. Guardian lesson uses labelled scenarios. Open All starter sources to show seven public skills, one public scaffolded activity, hosted starters and the wider docs library.
-SAY: Choose the problem you want your agent to solve.
-LOOK FOR: The full Guardian is not in the checked public repo. These are workshop loops, not the full AEX deployments.
-FALLBACK: Browser lessons need no wallet.
+16:00–18:00 | One job. A running agent.
+SHOW: Slide → installed standalone runtime
+DO: Focus on Rebalancer. Guardian stays out of the main demonstration until separately accepted. The recipe uses price thresholds and a dollar target; it is not the old percentage-allocation browser exercise.
+SAY: A useful agent has a real input, a decision and an observable result.
+LOOK FOR: A named installed instance, actual wallet balances and current run output.
+FALLBACK: If the live route is not accepted, identify the precise blocker; do not present the old helper as a deployed agent.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-18:00–20:00 | Inputs. Rules. Authority.
-SHOW: Deck → embedded walkthrough → back to slides
-DO: Click Open Sui Rebalancer or Open Liquidation Guardian. Point to the numbered steps without running ahead. Return to slide 15 for the builder QR. An AEX app tour is optional only if the coordinator has accepted the full launch/output/cost/stop path.
-SAY: First I will show you the route. Then we will run it together.
-LOOK FOR: Everyone sees where the run, change, evidence and save controls are.
-FALLBACK: Use the browser lesson; no terminal setup is required.
+18:00–20:00 | From source to a running agent.
+SHOW: Deck → local deployment console
+DO: Open the Studio deployment console through the local tunnel. Every operation has its own button and returns actual process output. Leave signing disabled until the exact funded action has been reviewed.
+SAY: Each step produces evidence that the next step can use.
+LOOK FOR: Actual runtime version, configuration, installation and process status.
+FALLBACK: The public download provides the same standalone source; AEX is not required.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-20:00–23:00 | Choose a Sui recipe.
-SHOW: Builder QR → optional funding QR → back to Build QR
-DO: At 20:00 show Build QR. Everyone opens build.html. At about 21:00, if funding is configured, open the 15-minute operator window and show Funding QR briefly. Return to Build QR. A window opened at 21:00 closes at 36:00. People can register in parallel; it does not block the lesson.
-SAY: Open this guide now and follow my first run. After minute 34 you will make your own change.
-LOOK FOR: Builder QR and funding QR have distinct labels. Neither scanning nor showing a QR opens intake.
-FALLBACK: Skip the funding detour if the allowance is not ready; everyone can do the read-only build.
+20:00–23:00 | Open the Rebalancer kit.
+SHOW: Kit QR → deployment guide
+DO: Show the single Build QR. The guide provides the downloadable kit and platform-specific launch steps. Explain Node24 once. Optional funding registration remains a separate QR and15-minute window.
+SAY: The same source and controls run locally.
+LOOK FOR: The local console is open, not just a downloaded file.
+FALLBACK: Pair up with a configured laptop if Node setup takes too long.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-23:00–24:00 | From input to decision.
-SHOW: Deck → Run Rebalancer (default) or Run Guardian
-DO: Take a quick show of hands if needed. Click the chosen recipe button to open the embedded walkthrough. Lead ONE recipe, not both. Participants can follow it or choose the other card. Leave the walkthrough open for the next ten minutes.
-SAY: Keep your guide open and click each step with me.
-LOOK FOR: The presenter is in the embedded demo; the room is on the same builder page.
-FALLBACK: Default to Rebalancer; use Guardian scenarios if live reads fail.
+23:00–24:00 | Prepare. Configure. Deploy.
+SHOW: Deployment console: Prepare → Configure → Deploy
+DO: Click Prepare and verifyNode24/source. Review the public wallet and real balances; historical default wallet is empty and not signer-verified. Set price thresholds, SUI dollar target and cadence. Click Deploy; inspect npmci output. These are real installation/configuration operations.
+SAY: Deployment makes the recipe executable; funding determines what it can do.
+LOOK FOR: Pinned dependency installation exits successfully.
+FALLBACK: Any configuration or installation error stays visible and blocks the run.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-24:00–27:00 | Inspect the first decision.
-SHOW: Embedded walkthrough step 1 → result
-DO: Click the baseline Run control. Read the summary, then expand the raw output if useful. Rebalancer: price, checkpoint, target and proposed change. Guardian: health factor, cap and whether it restores the target. No terminal typing.
-SAY: A proposal is something we can inspect before granting action authority.
-LOOK FOR: An actual browser execution result. No swap or repayment is claimed.
-FALLBACK: If the read fails, show the error and retry once or use Guardian.
+24:00–27:00 | Start the agent. Read the output.
+SHOW: Deployment console: Run once / Start
+DO: Click Run once first. Inspect the actualJSONL strategy output. Only start repeatedruns after the one-cycle outcome is understood. An unfundedwallet is a blockedrun, not a successfultrade.
+SAY: The log shows what this process actually observed and decided.
+LOOK FOR: Current timestamps, wallet, balance and strategy outcome.
+FALLBACK: Stop on failure; do not replace the wallet with sample holdings.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-27:00–31:00 | Change one rule. Compare.
-SHOW: Walkthrough change/compare → evidence
-DO: Use the next-step buttons to run the changed setting. Compare the saved baseline and new result. For Guardian, run the unknown-data case too. Then open the real Sui evidence link. Match the digest/status/balances/gas to the explorer; the historical Guardian receipt is a previous demo.
-SAY: The rule changes a proposal. A chain receipt proves a separate executed action.
-LOOK FOR: Both outputs remain visible for comparison. Unknown data stops Guardian.
-FALLBACK: Stay on the labelled scenario or previous receipt if the network fails; never fabricate a new transaction.
+27:00–31:00 | Inspect the proposed swap.
+SHOW: Deployment console: Inspect → raw output
+DO: Distinguish quote, unsigned transactionbuild, actualRPCsimulation and liveconfirmedreceipt. Currentdeployment has no signer; only claimstages whose outputexists. Fundingand exactsigningreview are still required before liveexecution.
+SAY: A route is not a receipt. Each stage has its own result.
+LOOK FOR: Amount, minimumoutput, simulationstatus and anyfailure.
+FALLBACK: Retain a failed or unfundedoutcome honestly; do not show historicalreceipts as a newrun.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-31:00–34:00 | Save the evidence.
-SHOW: Walkthrough save step → Modify the agent (slide 21)
-DO: Click Save to download the comparison. Each run is one-shot. Explain that the optional coding-agent wrapper can have its normal model cost; this browser helper makes no model or signing call. Close the completed walkthrough and open Modify the agent (slide 21). Slide 20 is an optional decision-record summary, not another recipe selection.
-SAY: That was our shared example. Now you will make your own change.
-LOOK FOR: Saved evidence and a clear handoff to independent work.
-FALLBACK: If no successful result exists, save the error and next diagnostic step without calling it a success.
+31:00–34:00 | Change one rule. Run again.
+SHOW: Deployment console: Stop → Modify → Run once
+DO: Stop scheduledruns, changeonestrategyparameter and save. Run onceagain; compareactualoutputs. The samewalletandsource stayselected.
+SAY: The change is visible in configuration and the next real run.
+LOOK FOR: Bothrunrecords and causeofdecisionchange.
+FALLBACK: Ifcapital ismissing, recordthatblocker; do notchange tosimulatedfunds.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-34:00–35:00 | Keep the decision record.
-SHOW: Decision-record summary → Modify the agent
-DO: Briefly summarize the saved inputs, changed rule, result and supporting evidence. Do not repeat recipe selection or show another QR. Advance to Modify the agent (slide 21) for the independent work at minute 34. If funding opened at 21:00 it closes at 36:00; the operator handles export separately.
-SAY: You now have 17 minutes for your own experiment. Pick one change you can explain.
-LOOK FOR: Everyone knows this is independent work, not another presenter demo.
-FALLBACK: Pair up or use Guardian scenarios if connectivity is poor.
+34:00–35:00 | Stop. Keep the evidence.
+SHOW: Deployment console: Stop → Download output
+DO: ClickStop and verifyrunning=false/nochildprocess. Save realJSONLoutput. Showthe independenttasknext.
+SAY: Stopping is an observable operation.
+LOOK FOR: Noactiveprocessorscheduledrun.
+FALLBACK: Force-stop only this isolated process if the gracefulstop timesout.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
-35:00–46:00 | Modify the agent.
-SHOW: Participant builder pages
-DO: At 34:00 hand over to independent work on the recipe already open. Rebalancer: change target SUI from 50% to 70%, then the band from 5 to 10 percentage points. Guardian: change target health factor from 1.3 to 1.5, then test unknown data. Compare and save outputs. Do not repeat recipe selection. Optional local code is available for builders who want it.
-SAY: Try one small change, compare the output, and prepare a short explanation.
-LOOK FOR: A chosen setting and an output the participant can explain.
-FALLBACK: Use the browser route or work in pairs. Full funded swaps/repayments are outside this lesson unless separately rehearsed.
+35:00–46:00 | Modify the Rebalancer.
+SHOW: Participant deployment consoles
+DO: Everyonecontinueswiththeinstalledrecipe. Changeoneparameter, runonce, explainandstop. No secondrecipeselection. GuardianfollowsonlyafterRebalancerisstable.
+SAY: One change, one real run, one explanation.
+LOOK FOR: Actualprocessoutput, not prewrittenresults.
+FALLBACK: Pairup iflocalsetupfailed.
 Presenter notes stay on a private display. AEX rehearsal state belongs to Studio.
 
 46:00–51:00 | Get one result worth showing.
