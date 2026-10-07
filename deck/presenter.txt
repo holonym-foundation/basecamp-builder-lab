@@ -97,7 +97,7 @@ Presenter notes stay on a private display. AEX rehearsal state belongs to Studio
 
 20:00–23:00 | Open the Rebalancer kit.
 SHOW: Kit QR → deployment guide
-DO: Show the single Build QR. The guide provides the downloadable kit and platform-specific launch steps. Explain Node24 once. Optional funding registration remains a separate QR and15-minute window.
+DO: Show the single Build QR. The guide provides the downloadable kit and platform-specific launch steps. Explain Node 24 once. Use Build QR first. In step 02, builders create or sign in to their own wallet, approve email, verify the address and save the strategy. Then return here, select Funding QR and open the 15-minute window. Never project the operator key.
 SAY: The same source and controls run locally.
 LOOK FOR: The local console is open, not just a downloaded file.
 FALLBACK: Pair up with a configured laptop if Node setup takes too long.
