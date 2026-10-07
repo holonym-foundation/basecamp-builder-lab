@@ -46,7 +46,11 @@ WAAP_CLI_ENV=production npx --yes @human.tech/waap-cli@2.2.1 reset-password --em
 4. Run the local funding-wallet sign-in launcher and enter the new password at its hidden prompt. Keep its isolated session directory. No funds move during login.
 5. Check `whoami` using that session and the pinned CLI. Compare its email and full Sui address with the web wallet. Only proceed when they match and mainnet balance/gas checks pass.
 
-This path is verified in the CLI/auth implementation, but the funded web account has not yet completed this rehearsal. Never treat matching email alone as proof that the intended funded wallet is connected. The independent recipient wallet setup does not authenticate the funding account.
+The presenter completed CLI login on October 7. Its Sui sender matched the confirmed 1 SUI rehearsal funding transfer. Batch distribution has not yet been rehearsed. Never treat matching email alone as proof that the intended funded wallet is connected. The independent recipient wallet setup does not authenticate the funding account.
+
+## Before any batch: earlier manual payments
+
+The rehearsal wallet already received its 1 SUI. The current script cannot import an earlier manual payment into a new payout ledger: `reconcile` only resolves a dispatch that this ledger already recorded. If a selected export includes an already-paid presenter or rehearsal wallet, stop before execute and have the payout agent resolve the cohort or add an explicitly reviewed prior-payment import. Do not delete rows from the complete export or send a second payment by assumption.
 
 ## Send from the dedicated funding session
 
@@ -77,4 +81,4 @@ Keep the operator key, authenticated session, exports, plan and ledger private. 
 
 Use Separate rehearsal campaign (testnet) in the operator screen and register.html?rehearsal=1 for form rehearsal. Console ?rehearsal=1 sends registrations to that isolated lane; it does not change the agent recipe’s mainnet read configuration. Keep test registrations in that rehearsal lane; the real registration accepts submissions without an open timer.
 
-Run source tests with `python3 -m unittest -v` from this folder. Tests use injected wallet/RPC functions, not real funds. A live payout rehearsal, measured allowance and authenticated funded sender remain required before calling distribution proven.
+Run source tests with `python3 -m unittest -v` from this folder. Tests use injected wallet/RPC functions, not real funds. The funding sender is authenticated and the manual 1 SUI rehearsal transfer is confirmed. A live batch payout rehearsal and measured participant allowance remain required before calling batch distribution proven.

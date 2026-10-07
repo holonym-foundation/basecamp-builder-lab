@@ -13,7 +13,7 @@ Click Install dependencies (or Install dependencies again). Wait for Dependencie
 Click Run once. Wait for a fresh timestamp and output. Read the actual outcome, including any funding block; an unsigned simulation is not a submitted swap.
 
 05 Inspect | http://127.0.0.1:8788/#inspect
-Read the latest output, expand Raw execution output and open its checkpoint or transaction link when available.
+Read HOLD, BUY SUI or SELL SUI, its reason and the separate dry-run status. Proposed amounts are quoted, not transferred. Expand Raw execution output for evidence.
 
 06 Modify | http://127.0.0.1:8788/#modify
 Change one threshold, click Apply configuration, then return to 04 Start / run and click Run once.
@@ -46,7 +46,7 @@ IF STUCK: Do not promise an allowance until the complete funded recipe has been 
 
 16–20 MIN | Tour one agent
 SCREEN: Deck → runtime console
-DO: Show the seven controls. Explain where each action runs: local computer for builders; Studio through the tunnel for this presenter.
+DO: Show the seven controls. Explain where each action runs: local computer for builders; verify the connected host when using a Studio tunnel.
 SAY: Check the runtime. Set up a wallet. Save the strategy. Install the agent. Run and inspect it. Change a rule, then stop.
 LOOK FOR: The audience understands the sequence before downloading.
 IF STUCK: Keep Guardian as a later recipe. Finish one working Rebalancer first.
@@ -60,7 +60,7 @@ IF STUCK: Pair with a laptop that is ready. Choose port 8789 below for a separat
 
 25–34 MIN | Register, install and run together
 SCREEN: Funding QR → operator → runtime console
-DO: When wallets are ready, select Funding QR. Registration accepts submissions without starting a timer. Optionally start a 15-minute reminder on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Use the numbered console links below. Open 03 Install agent and click Install dependencies. Wait until Dependencies reads Installed. Open 04 Start / run and click Run once. Read the new output before proceeding.
+DO: When wallets are ready, open slide 17 for the Funding QR. Registration accepts submissions without starting a timer. Optionally start a 15-minute reminder on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. After registration, open slide 18. Use the numbered console links below. Open 03 Install agent and click Install dependencies. Wait until Dependencies reads Installed. Open 04 Start / run and click Run once. Read the new output before proceeding.
 SAY: The install button runs npm ci. Installation does not start the agent. One run reads actual wallet balances and the live Sui pool.
 LOOK FOR: Show installation events, then a fresh checkpoint, price, balances and outcome from the funded presenter wallet.
 IF STUCK: If funding is not ready, explain the actual balance block. Continue installation while funding is processed; do not present historical results as a new run.
