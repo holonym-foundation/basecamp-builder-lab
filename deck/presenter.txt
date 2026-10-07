@@ -1,3 +1,26 @@
+CONSOLE STEPS (open screen, then click its button)
+
+01 Check runtime | http://127.0.0.1:8788/#prepare
+Click Check runtime (or Check runtime again). This verifies Node and recipe files; installation comes at step 03.
+
+02 Wallet + configure | http://127.0.0.1:8788/#configure
+Select Wallet and follow the setup command. Select Strategy, paste the returned Sui address, then click Save and continue to funding. Funding collects the email for that saved wallet.
+
+03 Install agent | http://127.0.0.1:8788/#deploy
+Click Install dependencies (or Install dependencies again). Wait for Dependencies: Installed and check the installation output.
+
+04 Start / run | http://127.0.0.1:8788/#run
+Click Run once. Wait for a fresh timestamp and output. Read the actual outcome, including any funding block; an unsigned simulation is not a submitted swap.
+
+05 Inspect | http://127.0.0.1:8788/#inspect
+Read the latest output, expand Raw execution output and open its checkpoint or transaction link when available.
+
+06 Modify | http://127.0.0.1:8788/#modify
+Change one threshold, click Apply configuration, then return to 04 Start / run and click Run once.
+
+07 Stop | http://127.0.0.1:8788/#stop
+If monitoring is running, click Stop agent. Click Save output to retain the result. A single Run once already exits after its cycle.
+
 BASECAMP PRESENTER COMPANION
 
 00–06 MIN | Why personal agents
@@ -37,7 +60,7 @@ IF STUCK: Pair with a laptop that is ready. If port 8788 is occupied by this con
 
 25–34 MIN | Register, install and run together
 SCREEN: Funding QR → operator → runtime console
-DO: When wallets are ready, select Funding QR and open the 15-minute window on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Return to the console: Install agent → Install dependencies → wait for completion → Start / run → Run once.
+DO: When wallets are ready, select Funding QR and open the 15-minute window on the private operator screen. Builders enter email in Funding; direct QR users enter email and address. Use the numbered console links below. Open 03 Install agent and click Install dependencies. Wait until Dependencies reads Installed. Open 04 Start / run and click Run once. Read the new output before proceeding.
 SAY: The install button runs npm ci. Installation does not start the agent. One run reads actual wallet balances and the live Sui pool.
 LOOK FOR: Show installation events, then a fresh checkpoint, price, balances and outcome from the funded presenter wallet.
 IF STUCK: If funding is not ready, explain the actual balance block. Continue installation while funding is processed; do not present historical results as a new run.
@@ -49,19 +72,12 @@ SAY: The rule changed. Now compare the inputs and explain why the result changed
 LOOK FOR: Each output is timestamped and has the current configured wallet. A simulation is explicitly labelled.
 IF STUCK: If price or holdings do not meet the rule, explain HOLD. Do not invent a trade. A signed swap is only shown after its separate funded rehearsal passes.
 
-40–51 MIN | Independent build + funding handoff
+40–57 MIN | Independent build + funding handoff
 SCREEN: Participant consoles + private funding operator
 DO: At the recorded cutoff, refresh operator controls and export campaign.json and responses.csv. Pass both to the payout agent with the approved allowance, total, source account and reserve. Review the exact plan before sending. Builders check receipts, run, modify and stop their own agent.
 SAY: Keep one result you can explain: the rule, the live inputs and the output.
 LOOK FOR: At most 30 selected recipients; waitlisted builders can continue setup. Every sent payment has its own checked receipt.
 IF STUCK: An unresolved payment stops payout processing. Never create a second ledger to retry. Allowance and source authentication must be ready before live sending.
-
-51–57 MIN | Share two results
-SCREEN: Slides + two participant outputs
-DO: Ask two builders to show their rule, one result and what they changed. Keep each share to two minutes.
-SAY: What did the agent observe, what did it decide, and what evidence supports that?
-LOOK FOR: A real output and a clear explanation. A confirmed action has a matching explorer receipt.
-IF STUCK: Use the presenter’s retained output if volunteers are not ready.
 
 57–60 MIN | Close
 SCREEN: Closing slide
