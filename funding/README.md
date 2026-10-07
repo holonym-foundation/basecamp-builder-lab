@@ -25,6 +25,29 @@ Planning is offline and sends nothing. Review every email/address pair, exclusio
 
 You can preview a plan before registration ends. Before sending, settle on one reviewed cohort and preserve its exact plan and ledger. Once execution binds the campaign to that plan, a later export cannot replace it or add recipients through a new ledger. Exporting and offline planning do not send funds.
 
+## Funding from a wallet created in the web app
+
+The operator key unlocks registration controls only. It does not connect or authenticate a WaaP wallet. The dashboard has no sender-wallet connection or transaction approval UI yet.
+
+A web wallet signed in with an email link, social login or passkey does not necessarily have a CLI password. The pinned CLI supports email/password login; it does not reuse the browser session. Do not run signup to access an existing funded account.
+
+For a single rehearsal transfer, use the existing wallet at https://waap.xyz, sign in normally, select SUI on mainnet and prepare a Send to the participant's full saved Sui address. Review the amount and network in the wallet before approval. A registration receipt does not authorize a payment. Record the confirmed transaction digest; do not include an already-paid recipient in an automatic payout without reconciling that payment.
+
+For CLI payouts from the same account:
+
+1. In the web wallet, record the funding account's full Sui address and network.
+2. If that account already has a password, use the private login launcher. Otherwise explicitly request a password setup/reset email:
+
+```sh
+WAAP_CLI_ENV=production npx --yes @human.tech/waap-cli@2.2.1 reset-password --email aex@holonym.id
+```
+
+3. Open the email and set a password through the wallet's reset page. The implementation adds a credential to the existing identity when none exists. Completing reset signs out existing sessions. This account-change step is operator initiated; the workshop tools never trigger it automatically.
+4. Run the local funding-wallet sign-in launcher and enter the new password at its hidden prompt. Keep its isolated session directory. No funds move during login.
+5. Check `whoami` using that session and the pinned CLI. Compare its email and full Sui address with the web wallet. Only proceed when they match and mainnet balance/gas checks pass.
+
+This path is verified in the CLI/auth implementation, but the funded web account has not yet completed this rehearsal. Never treat matching email alone as proof that the intended funded wallet is connected. The independent recipient wallet setup does not authenticate the funding account.
+
 ## Send from the dedicated funding session
 
 Authenticate aex@holonym.id privately with pinned @human.tech/waap-cli@2.2.1 and an isolated WAAP_CLI_SESSION_DIR. Do not use AEX coordinator buyer/seller rehearsal sessions. Keep a single durable ledger for the campaign.
